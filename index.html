@@ -518,10 +518,7 @@
     .container {
         padding: 8px;
         gap: 8px;
-        /* Allow vertical scrolling on mobile if content overflows */
-        overflow-y: auto; 
-        height: auto;
-        min-height: 100vh;
+        /* Scrolling is handled by inner elements, not the main container */
     }
 
     /* --- Sidebar: Becomes an overlay --- */
@@ -647,25 +644,16 @@
 @media (max-width: 480px) {
     /* --- Input Footer: Stack for narrow phones --- */
     .input-footer {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 16px;
-    }
+                flex-direction: column;
+                align-items: center; /* <-- This is the change */
+                gap: 16px;
+            }
     .input-tools {
         justify-content: center;
         flex-wrap: wrap; /* Allow tools to wrap if needed */
         gap: 10px;
     }
-    .send-btn {
-        width: 100%;
-        height: 48px;
-        border-radius: 16px;
-        padding: 10px;
-    }
-    .send-btn svg {
-        width: 20px;
-        height: 20px;
-    }
+    
     
     /* Make selects take more space */
     .minimal-select,
