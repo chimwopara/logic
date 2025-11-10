@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logic Labs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Default Theme (Dark/Midnight) Variables - served as base */
+            --bg-app: #000000;
+            --bg-gradient-start: #1c1c1e;
+            --bg-gradient-end: #000000;
+            --bg-glass: rgba(28, 28, 30, 0.75);
+            --bg-glass-light: rgba(255, 255, 255, 0.1);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --accent-primary: #0A84FF;
+            --accent-highlight: #409CFF;
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(235, 235, 245, 0.6);
+            --text-tertiary: rgba(235, 235, 245, 0.3);
+            --success: #30D158;
+            --error: #FF453A;
+            --ease-spring: cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            background-color: var(--bg-app);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+            font-size: 14px;
+            line-height: 1.4;
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+        
+        .container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            padding: 12px;
+            gap: 12px;
+            background: linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-end)); 
+            transition: background 0.5s ease;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background-color: var(--bg-glass);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            user-select: none;
+            z-index: 10;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transition: transform 0.5s var(--ease-spring), opacity 0.3s ease, width 0.5s var(--ease-spring), background-color 0.5s ease;
+            margin-left: 0;
+        }
+        
+        .sidebar.hidden {
+            transform: translateX(-110%);
+            opacity: 0;
+            pointer-events: none;
+            width: 0; /* Helps main content expand smoothly */
+            margin-left: -12px; /* Counteract container gap when hidden */
+        }
+        
+        .toggle-sidebar-btn {
+            position: fixed;
+            top: 23px;
+            left: 260px;
+            width: 40px;
+            height: 40px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            transition: all 0.5s var(--ease-spring);
+        }
+
+        /* Collapsed state for the toggle button */
+        .toggle-sidebar-btn.collapsed {
+            left: 24px;
+            background: rgba(28, 28, 30, 0.5); /* Slightly more transparent when docked to side */
+            box-shadow: none;
+        }
+        
+        .toggle-sidebar-btn:hover {
+            background: var(--bg-glass-light);
+            transform: scale(1.05);
+        }
+
+        .toggle-sidebar-btn.collapsed:hover {
+             transform: scale(1.05) translateX(2px); /* Subtle nudge right when hovered in collapsed state */
+        }
+        
+        .toggle-sidebar-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-primary);
+            transition: transform 0.5s var(--ease-spring);
+        }
+
+        /* Rotate icon when collapsed */
+        .toggle-sidebar-btn.collapsed svg {
+            transform: rotate(180deg);
+        }
+        
+        .sidebar-header { padding: 16px 16px 12px 16px; }
+        .logo { display: flex; align-items: center; gap: 12px; padding-left: 8px; margin-bottom: 12px; }
+        .logo-img { height: 28px; width: auto; }
+        .logo-text {
+            font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
+
+        .sidebar-btn {
+            margin: 4px 12px;
+            padding: 8px 12px;
+            color: var(--text-primary);
+            background: transparent;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s var(--ease-spring);
+            display: flex; align-items: center; gap: 10px;
+            border: none; text-align: left;
+        }
+        .sidebar-btn:hover { background: var(--bg-glass-light); }
+        .sidebar-btn:active { background: rgba(255,255,255,0.15); transform: scale(0.98); }
+        .sidebar-btn svg { opacity: 0.8; width: 18px; height: 18px; }
+
+        .new-chat-btn {
+            background: rgba(10, 132, 255, 0.15);
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+        .new-chat-btn:hover { background: rgba(10, 132, 255, 0.25) !important; }
+        .new-chat-btn svg { opacity: 1; color: var(--accent-primary); }
+        
+        .sidebar-section-title {
+            font-size: 12px; font-weight: 600; color: var(--text-tertiary);
+            padding: 20px 20px 8px 20px; text-transform: uppercase; letter-spacing: 0.05em;
+        }
+
+        .history-container { flex: 1; overflow-y: auto; padding: 0 12px; }
+        .history-container::-webkit-scrollbar { width: 0px; }
+
+        .history-item {
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .history-item:hover { background: var(--bg-glass-light); color: var(--text-primary); }
+
+        .sidebar-footer {
+            padding: 16px;
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-glass);
+            border-radius: 0 0 16px 16px;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .mini-stats {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 12px; color: var(--text-secondary); font-weight: 500;
+            padding: 0 8px;
+        }
+        .text-accent { color: var(--accent-primary); }
+
+        .google-signin-btn {
+            width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
+            background-color: rgba(255,255,255,0.1);
+            color: #fff; border: 1px solid var(--border-glass);
+            border-radius: 10px; padding: 8px;
+            font-size: 13px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease;
+        }
+        .google-signin-btn:hover { background-color: rgba(255,255,255,0.15); }
+        
+        .main-content {
+            flex: 1;
+            border-radius: 16px;
+            background: transparent;
+            backdrop-filter: none;
+            border: none;
+            display: flex; flex-direction: column;
+            position: relative; overflow: hidden;
+            box-shadow: none;
+            transition: all 0.5s var(--ease-spring); /* Smooth resize when sidebar hides */
+        }
+        
+        .content-area { flex: 1; display: flex; overflow: hidden; position: relative; }
+        
+        .creator-panel {
+            flex: 1; max-width: 100%; margin: 0 auto;
+            display: flex; flex-direction: column;
+            transition: all 0.5s var(--ease-spring);
+        }
+        .content-area.has-viewer .creator-panel {
+            max-width: 45%; border-right: 1px solid var(--border-glass);
+        }
+
+        .prompt-container {
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; padding: 40px;
+        }
+
+        .greeting {
+            text-align: center; max-width: 600px; margin-bottom: 40px;
+            animation: fadeIn 0.8s ease-out;
+        }
+        .greeting h1 {
+            font-weight: 700; font-size: 2.8rem; margin-bottom: 12px;
+            color: var(--text-primary); letter-spacing: -0.02em;
+        }
+        .greeting p {
+            color: var(--text-secondary); font-size: 1.3rem; font-weight: 400;
+        }
+
+        .input-area-wrapper {
+            width: 100%; max-width: 720px; margin: 0 auto 32px auto;
+            padding: 0 24px; position: relative; z-index: 2;
+        }
+
+        .input-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(60px) saturate(180%);
+            -webkit-backdrop-filter: blur(60px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 16px 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .input-container:focus-within {
+            border-color: rgba(10, 132, 255, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        textarea#questionInput {
+            width: 100%; min-height: 48px; max-height: 200px;
+            background: transparent; border: none;
+            color: var(--text-primary); font-family: inherit;
+            font-size: 1rem; line-height: 1.4;
+            resize: none; outline: none;
+        }
+        textarea#questionInput::placeholder { color: var(--text-tertiary); }
+
+        .input-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 12px; padding-top: 0;
+        }
+
+        .input-tools { display: flex; gap: 8px; align-items: center; }
+
+        .minimal-btn {
+            background-color: rgba(255,255,255,0.08);
+            color: var(--text-secondary); border: none;
+            padding: 6px 12px; border-radius: 18px;
+            font-size: 0.85rem; font-weight: 500;
+            cursor: pointer; display: flex; align-items: center; gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .minimal-btn:hover { background-color: rgba(255,255,255,0.15); color: #fff; }
+        .minimal-btn.active-lang { background-color: var(--accent-primary); color: #fff; }
+
+        #languageSelect { display: none; }
+        
+        .minimal-select {
+            background-color: rgba(255,255,255,0.08);
+            color: var(--text-secondary);
+            border: 1px solid transparent;
+            padding: 6px 12px;
+            border-radius: 18px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+        
+        .minimal-select:hover {
+            background-color: rgba(255,255,255,0.15);
+            color: #fff;
+        }
+        
+        .minimal-select:focus {
+            background-color: rgba(255,255,255,0.12);
+            border-color: rgba(10, 132, 255, 0.3);
+            color: #fff;
+        }
+        
+        /* Style for disabled/placeholder options */
+        .minimal-select option[disabled] {
+            color: var(--text-tertiary);
+        }
+
+        .send-btn {
+            width: 32px; height: 32px;
+            background: var(--accent-primary);
+            color: white; border: none; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s var(--ease-spring);
+        }
+        .send-btn svg { width: 16px; height: 16px; stroke-width: 3px; }
+        .send-btn:hover { transform: scale(1.1); background: var(--accent-highlight); }
+        .send-btn:active { transform: scale(0.95); }
+        .send-btn:disabled { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.2); transform: none; cursor: default; }
+
+        .modal {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px);
+            align-items: center; justify-content: center; z-index: 1000;
+            opacity: 0; transition: opacity 0.2s ease;
+        }
+        .modal.active { display: flex; opacity: 1; }
+        
+        .modal-content {
+            background: rgba(44, 44, 46, 0.9);
+            backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border-radius: 20px; overflow: hidden;
+            transform: scale(0.95); opacity: 0; transition: all 0.3s var(--ease-spring);
+        }
+        .modal.active .modal-content { transform: scale(1); opacity: 1; }
+        
+        .language-modal-content {
+            max-width: 900px; width: 90%; max-height: 80vh;
+            display: flex; flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+        }
+        .modal-title-text { font-size: 1.1rem; font-weight: 600; }
+
+        .close-modal-btn {
+             background: rgba(118, 118, 128, 0.24); border: none; color: var(--text-secondary);
+             width: 28px; height: 28px; border-radius: 50%;
+             display: flex; align-items: center; justify-content: center;
+             cursor: pointer; transition: all 0.2s ease;
+        }
+        .close-modal-btn:hover { background: rgba(118, 118, 128, 0.4); color: #fff; }
+
+        .language-search-bar {
+            width: 100%; padding: 10px 16px 10px 34px;
+            background: rgba(118, 118, 128, 0.24); border: none; border-radius: 10px;
+            color: var(--text-primary); font-size: 0.95rem; margin-top: 12px; outline: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(235,235,245,0.5)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: 10px center;
+        }
+        .language-search-bar:focus { background-color: rgba(118, 118, 128, 0.35); }
+
+        .language-grid-container { flex: 1; overflow-y: auto; padding: 20px; }
+        .language-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        @media (max-width: 800px) { .language-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 600px) { .language-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        .language-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 14px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            gap: 8px;
+        }
+        .language-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+        .language-card.selected { background: rgba(10, 132, 255, 0.2); }
+
+        .lang-icon {
+            width: 48px; height: 48px;
+            flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+            font-size: 24px; color: var(--text-secondary);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        .lang-icon img { width: 100%; height: 100%; object-fit: contain; }
+
+        .lang-info { width: 100%; }
+        .lang-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; color: var(--text-primary); }
+        .lang-desc { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.3; }
+        .special-card { background: linear-gradient(135deg, rgba(10, 132, 255, 0.15), rgba(94, 92, 230, 0.15)); }
+
+        .challenge-viewer {
+            flex: 1; background: rgba(0,0,0,0.5);
+            display: none; flex-direction: column;
+            border-left: 1px solid var(--border-glass); backdrop-filter: blur(40px);
+        }
+        .challenge-viewer.active, .content-area.has-viewer .challenge-viewer { display: flex !important; }
+
+        .viewer-header {
+            height: 50px; padding: 0 16px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid var(--border-glass); background: rgba(255,255,255,0.03);
+        }
+        .viewer-title { font-weight: 600; font-size: 0.9rem; color: var(--text-primary); opacity: 0.8; }
+        .tool-btn {
+            background: var(--bg-glass-light); border: none; color: var(--text-secondary);
+            cursor: pointer; padding: 6px; border-radius: 8px; transition: all 0.2s ease;
+        }
+        .tool-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+        .iframe-wrap {
+            flex: 1; background: #fff; border-radius: 12px; margin: 12px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .hidden { display: none !important; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .status-area { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .loading-indicator { display: none; align-items: center; gap: 10px; color: var(--text-secondary); font-weight: 500; }
+        .loading-indicator.active { display: flex; }
+        .spinner { width: 20px; height: 20px; border: 2.5px solid rgba(255,255,255,0.2); border-top-color: var(--accent-primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .error-message, .success-message { padding: 10px 14px; border-radius: 10px; font-size: 0.9rem; font-weight: 500; display: none; backdrop-filter: blur(10px); }
+        .error-message.active, .success-message.active { display: block; animation: slideUp 0.3s ease; }
+        .error-message { background: rgba(255, 69, 58, 0.2); color: #ff7b7b; }
+        .success-message { background: rgba(48, 209, 88, 0.2); color: #6bff87; }
+
+        /* Theme Grid */
+        .theme-grid {
+             display: grid;
+             grid-template-columns: repeat(8, 1fr); /* Changed to 8 columns as requested */
+             gap: 16px; /* Increased gap slightly for names */
+             margin-bottom: 24px; width: 100%;
+        }
+        
+        /* Responsive breakpoints for theme grid */
+        @media (max-width: 1000px) { .theme-grid { grid-template-columns: repeat(6, 1fr); } }
+        @media (max-width: 700px) { .theme-grid { grid-template-columns: repeat(4, 1fr); } }
+        @media (max-width: 500px) { .theme-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .theme-wrapper {
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            cursor: pointer; transition: transform 0.2s ease;
+        }
+        .theme-wrapper:hover { transform: translateY(-4px); }
+
+        .theme-option {
+             width: 100%; aspect-ratio: 1; border-radius: 16px;
+             border: 2px solid rgba(255,255,255,0.1); transition: all 0.2s ease;
+             position: relative; overflow: hidden;
+        }
+        .theme-wrapper:hover .theme-option { border-color: var(--accent-primary); }
+
+        .theme-option.locked::after {
+             content: '?'; /* Changed lock to question mark */
+             position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+             background: rgba(0,0,0,0.6); font-size: 1.8rem; backdrop-filter: blur(4px);
+             text-shadow: 0 2px 10px rgba(0,0,0,0.5); font-weight: 700;
+        }
+
+        .theme-name {
+            font-size: 0.75rem; color: var(--text-secondary); text-align: center;
+            font-weight: 500; max-width: 100%; white-space: nowrap;
+            overflow: hidden; text-overflow: ellipsis;
+        }
+        .theme-wrapper:hover .theme-name { color: var(--text-primary); }
+        
+        /* Premium Plans Layout */
+        .premium-plans-container {
+             display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+             width: 100%; max-width: 900px; /* Increased width for bigger display */
+        }
+
+        /* Downgrade Link styling */
+        #downgradeOption {
+             display: none; /* Hidden by default */
+             margin-top: 24px;
+             cursor: pointer;
+             color: var(--text-tertiary);
+             font-size: 0.9rem;
+             transition: color 0.2s ease;
+             text-decoration: underline;
+             text-underline-offset: 4px;
+        }
+        #downgradeOption:hover {
+             color: var(--error);
+        }
+
+    </style>
+</head>
+<body>
+    <button class="toggle-sidebar-btn" onclick="toggleSidebar()" id="toggleSidebarBtn" title="Toggle Sidebar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+    </button>
+    
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="logo.png" alt="Logic Labs Logo" class="logo-img">
+                    <span class="logo-text">Logic Labs</span>
+                </div>
+            </div>
+
+            <button class="sidebar-btn new-chat-btn" onclick="newChallenge()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                New Challenge
+            </button>
+            
+            <button class="sidebar-btn" onclick="showStoreModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                Challenge Store
+            </button>
+            
+            <button class="sidebar-btn" onclick="showThemeStoreModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+                Theme Store
+            </button>
+            
+            <div class="sidebar-section-title">Recents</div>
+            <div class="history-container">
+                <div id="historyList"></div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="mini-stats" style="justify-content: center; gap: 20px;">
+                     <span style="font-size: 0.9rem;">Steps: <strong id="stepsCount" class="text-accent" style="font-size: 1rem;">250</strong></span>
+                     <button id="sidebarPremiumBtn" class="minimal-btn" onclick="showPremiumModal()" style="padding: 4px 12px; font-size: 0.85rem; background: rgba(10, 132, 255, 0.15); color: var(--accent-primary); font-weight: 600; border: 1px solid rgba(10, 132, 255, 0.2);">Upgrade</button>
+                </div>
+
+                <button class="google-signin-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" width="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/><path d="M1 1h22v22H1z" fill="none"/></svg>
+                    Sign in with Google
+                </button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="content-area" id="mainContentArea">
+                <div class="creator-panel" id="creatorPanel">
+                    <div class="prompt-container">
+                        <div class="greeting">
+                            <h1>Learn Different</h1>
+                            <p>prompt you problem, we turn the solution into logic steps, you solve it.</p>
+                        </div>
+                    </div>
+
+                    <div class="input-area-wrapper">
+                        <div class="input-container">
+                            <textarea id="questionInput" placeholder="Describe your coding challenge..."></textarea>
+                            
+                            <div class="input-footer">
+                                <div class="input-tools">
+                                    <button id="languageTrigger" class="minimal-btn" onclick="openLanguageModal()">
+                                        <span id="currentLanguageLabel">Select Language...</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </button>
+
+                                    <!-- Hidden select for form submission/logic -->
+                                    <select id="languageSelect" style="display: none;">
+                                        <option value="" disabled selected>Select Language</option>
+                                        <option value="javascript">JavaScript</option>
+                                        <option value="python">Python</option>
+                                        <option value="c">C</option>
+                                        <option value="custom">custom</option>
+                                    </select>
+                                    
+                                    <select id="difficultySelect" class="minimal-select" onchange="checkSelections()">
+                                        <option value="" disabled selected>Select Difficulty...</option>
+                                        <option value="beginner">Beginner</option>
+                                        <option value="intermediate">Intermediate</option>
+                                        <option value="advanced">Advanced</option>
+                                    </select>
+                                    
+                                    <input id="customLanguageInput" class="minimal-select hidden" style="border: 1px solid var(--accent-primary); cursor: text; min-width: 120px;" placeholder="e.g. Assembly..." oninput="checkSelections()">
+                                </div>
+                                
+                                <button class="send-btn" onclick="generateChallenge()" id="generateBtn" title="Generate" disabled>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="19" x2="12" y2="5"></line>
+                                        <polyline points="5 12 12 5 19 12"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="status-area">
+                            <div class="loading-indicator" id="loadingIndicator">
+                                <div class="spinner"></div>
+                                <span>Designing your challenge...</span>
+                            </div>
+                            <div class="error-message" id="errorMessage"></div>
+                            <div class="success-message" id="successMessage"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="challenge-viewer" id="challengeViewer">
+                    <div class="viewer-header">
+                        <div class="viewer-title">Challenge Artifact</div>
+                        <button class="tool-btn" onclick="closeViewer()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+                    <div class="iframe-wrap">
+                        <iframe id="challengeFrame" src=""></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="languageModal" onclick="if(event.target === this) closeLanguageModal()">
+        <div class="language-modal-content" style="background: transparent; backdrop-filter: none; border: none; box-shadow: none; padding: 32px; max-height: 90vh;">
+             <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 800px; margin: 0 auto;">
+                 <h2 style="font-size: 2.5rem; color: var(--text-primary); font-weight: 800; text-align: center; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Browse Languages</h2>
+                 <input type="text" id="languageSearch" class="language-search-bar" placeholder="Search languages..." onkeyup="filterLanguages()" style="background: rgba(28, 28, 30, 0.8); backdrop-filter: blur(20px); border: 1px solid var(--border-glass); padding: 16px 16px 16px 48px; font-size: 1.1rem; border-radius: 16px; background-position: 18px center;">
+             </div>
+             
+             <div class="language-grid-container" style="margin-top: 24px; padding: 0;">
+                 <div class="language-grid" id="languageGrid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px;"></div>
+             </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="storeModal" onclick="if(event.target === this) closeStoreModal()">
+        <div style="text-align: center; padding: 40px; width: 100%; max-width: 450px;">
+             <div style="background: var(--accent-primary); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px auto; box-shadow: 0 10px 40px -10px rgba(0, 122, 255, 0.6);">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+             </div>
+             <h2 style="font-size: 2rem; margin-bottom: 12px; font-weight: 800; color: var(--text-primary); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Challenge Store</h2>
+             <p style="color: var(--text-secondary); font-size: 1.2rem; line-height: 1.5; font-weight: 500;">Browse community challenges soon.<br>Playing costs <strong>steps</strong> from your plan.</p>
+        </div>
+    </div>
+
+    <div class="modal" id="themeStoreModal" onclick="if(event.target === this) closeThemeStoreModal()">
+        <div style="text-align: center; padding: 40px; width: 100%; max-width: 1000px; /* Increased width for 8-column grid */">
+             <h2 style="font-size: 2.5rem; margin-bottom: 32px; font-weight: 800; color: var(--text-primary); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Theme Store</h2>
+             
+             <div class="theme-grid" id="themeGrid" style="gap: 20px; max-height: 60vh; overflow-y: auto; padding: 10px;">
+                 <!-- Generated by JS -->
+             </div>
+        </div>
+    </div>
+
+    <div class="modal" id="premiumModal" onclick="if(event.target === this) closePremiumModal()">
+        <div style="padding: 32px; width: 100%; max-width: 900px; position: relative; display: flex; flex-direction: column; align-items: center;">
+             <!-- Demo Unlock Button - moved to top left relative to container -->
+             <button id="demoThemesBtn" class="minimal-btn" onclick="demoUnlockThemes()" style="position: absolute; top: 0; left: 0; padding: 6px 10px; font-size: 0.8rem; opacity: 0; pointer-events: none; transition: all 0.3s ease; background: rgba(255,255,255,0.1);">
+                 Demo Unlock
+             </button>
+
+             <h3 style="font-size: 2.5rem; margin-bottom: 40px; color: var(--text-primary); font-weight: 800; text-align: center; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Premium Plans</h3>
+             
+             <div class="premium-plans-container">
+                 <!-- Shy Member Option -->
+                 <div style="background: rgba(28, 28, 30, 0.8); backdrop-filter: blur(40px); border: 1px solid var(--border-glass); border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+                     <h4 style="font-size: 1.4rem; font-weight: 700;">Shy Member</h4>
+                     <div style="font-size: 2rem; font-weight: 800;">$4.99<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/mo</span></div>
+                     <ul style="text-align: left; color: var(--text-secondary); font-size: 1rem; padding-left: 20px; margin-bottom: auto; list-style-type: disc; line-height: 1.5;">
+                         <li>1,000 monthly output steps</li>
+                         <li>Unlimited theme access</li>
+                     </ul>
+                     <button id="btn-shy" class="minimal-btn" onclick="activatePremium('Shy Member', 1000)" style="width: 100%; justify-content: center; background: rgba(255,255,255,0.1); margin-top: 24px; padding: 12px; font-size: 1rem;">Select</button>
+                 </div>
+
+                 <!-- Community Member Option -->
+                 <div style="background: rgba(10, 132, 255, 0.1); backdrop-filter: blur(40px); border: 1px solid rgba(10, 132, 255, 0.3); border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 16px; position: relative; box-shadow: 0 20px 60px rgba(10, 132, 255, 0.2);">
+                     <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent-primary); padding: 6px 16px; border-radius: 16px; font-size: 0.85rem; font-weight: 700; color: white; box-shadow: 0 4px 12px rgba(10, 132, 255, 0.4);">POPULAR</div>
+                     <h4 style="font-size: 1.4rem; font-weight: 700; color: var(--accent-primary);">Community Member</h4>
+                     <div style="font-size: 2rem; font-weight: 800;">$9.99<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/mo</span></div>
+                     <ul style="text-align: left; color: var(--text-secondary); font-size: 1rem; padding-left: 20px; margin-bottom: auto; list-style-type: disc; line-height: 1.5;">
+                         <li>5,000 monthly output steps</li>
+                         <li>Access Challenge Store</li>
+                         <li>Unlimited theme access</li>
+                     </ul>
+                     <button id="btn-community" class="minimal-btn" onclick="activatePremium('Community Member', 5000)" style="width: 100%; justify-content: center; background: var(--accent-primary); color: white; margin-top: 24px; padding: 12px; font-size: 1rem;">Select</button>
+                 </div>
+
+                 <!-- Super Member Option -->
+                 <div style="background: linear-gradient(145deg, rgba(94, 92, 230, 0.15), rgba(191, 90, 242, 0.15)); backdrop-filter: blur(40px); border: 1px solid rgba(94, 92, 230, 0.5); border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 20px 60px rgba(94, 92, 230, 0.2);">
+                     <h4 style="font-size: 1.4rem; font-weight: 700;">Super Member</h4>
+                     <div style="font-size: 2rem; font-weight: 800;">$19.99<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/mo</span></div>
+                     <ul style="text-align: left; color: var(--text-secondary); font-size: 1rem; padding-left: 20px; margin-bottom: auto; list-style-type: disc; line-height: 1.5;">
+                         <li>10,000 monthly output steps</li>
+                         <li>Earn from uploads (1¢/use)</li>
+                         <li>Priority processing</li>
+                         <li>All previous perks</li>
+                     </ul>
+                     <button id="btn-super" class="minimal-btn" onclick="activatePremium('Super Member', 10000)" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #5e5ce6, #bf5af2); color: white; margin-top: 24px; padding: 12px; font-size: 1rem; border: none;">Select</button>
+                 </div>
+             </div>
+             <p style="text-align: center; color: rgba(255,255,255,0.5); margin-top: 32px; font-size: 1rem; font-weight: 500;">Free plan includes 250 output steps monthly.</p>
+             
+             <div id="downgradeOption" onclick="downgradeToFree()">
+                 Return to Free Plan
+             </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    
+    <script>
+        const languages = [
+            { id: 'assembly', name: 'Assembly', desc: 'Low-level hardware control', img: 'Assembly.png' },
+            { id: 'bash', name: 'Bash', desc: 'Command line scripting', img: 'Bash.png' },
+            { id: 'c', name: 'C', desc: 'System programming', img: 'C.png' },
+            { id: 'csharp', name: 'C#', desc: '.NET development', img: 'C%23.png' },
+            { id: 'cpp', name: 'C++', desc: 'High-performance apps', img: 'C++.png' },
+            { id: 'css', name: 'CSS', desc: 'Web styling', img: 'Css.png' },
+            { id: 'go', name: 'Go', desc: 'Scalable cloud services', img: 'Go.png' },
+            { id: 'html', name: 'HTML', desc: 'Web page structure', img: 'Html.png' },
+            { id: 'java', name: 'Java', desc: 'Enterprise applications', img: 'Java.png' },
+            { id: 'javascript', name: 'JavaScript', desc: 'Web interactivity', img: 'Javascript.png' },
+            { id: 'kotlin', name: 'Kotlin', desc: 'Android development', img: 'Kotlin.png' },
+            { id: 'php', name: 'PHP', desc: 'Server-side scripting', img: 'Php.png' },
+            { id: 'python', name: 'Python', desc: 'Data science & AI', img: 'Python.png' },
+            { id: 'r', name: 'R', desc: 'Statistical computing', img: 'R.png' },
+            { id: 'rust', name: 'Rust', desc: 'Memory safety', img: 'Rust.png' },
+            { id: 'swift', name: 'Swift', desc: 'iOS development', img: 'Swift.png' },
+            { id: 'typescript', name: 'TypeScript', desc: 'Typed JavaScript', img: 'Typescrpt.png' },
+            { id: 'zsh', name: 'Z Shell', desc: 'Extended shell', img: 'Z.png' },
+            { id: 'custom', name: 'Other', desc: 'Any language (1000★)', icon: '✨', isSpecial: true }
+        ];
+
+        // Themes Configuration - massively expanded with dynamic color definitions
+        const themes = [
+            // Originals
+            { id: 'default', name: 'Midnight (Default)', start: '#1c1c1e', end: '#000000', accent: '#0A84FF' },
+            { id: 'ocean', name: 'Ocean Blue', start: '#005f73', end: '#0a9396', accent: '#94d2bd' },
+            { id: 'sunset', name: 'Sunset Orange', start: '#941b0c', end: '#bc3908', accent: '#f6aa1c' },
+            { id: 'forest', name: 'Forest Green', start: '#1b4332', end: '#2d6a4f', accent: '#52b788' },
+            { id: 'lavender', name: 'Lavender Dream', start: '#240046', end: '#3c096c', accent: '#9d4edd' },
+            { id: 'cherry', name: 'Cherry Blossom', start: '#590d22', end: '#800f2f', accent: '#ff4d6d' },
+            { id: 'gold', name: 'Royal Gold', start: '#332900', end: '#4d3d00', accent: '#ffd700' },
+            { id: 'neon', name: 'Neon Cyber', start: '#0d0d0d', end: '#1a1a1a', accent: '#00ff9f' },
+            { id: 'slate', name: 'Slate Minimal', start: '#334155', end: '#475569', accent: '#94a3b8' },
+            { id: 'coffee', name: 'Coffee', start: '#4a3529', end: '#5c4739', accent: '#d4a373' },
+            { id: 'dracula', name: 'Dracula', start: '#44475a', end: '#6272a4', accent: '#ff79c6' },
+            // New Themes (30+)
+            { id: 'arctic', name: 'Arctic Ice', start: '#003f5c', end: '#2f4b7c', accent: '#a0e4f1' },
+            { id: 'mint', name: 'Fresh Mint', start: '#164e44', end: '#065f46', accent: '#6ee7b7' },
+            { id: 'matrix', name: 'The Matrix', start: '#001a00', end: '#003300', accent: '#00ff00' },
+            { id: 'vaporwave', name: 'Vaporwave', start: '#5b2c6f', end: '#d60270', accent: '#00e5ff' },
+            { id: 'ruby', name: 'Ruby Red', start: '#3d0000', end: '#9b2226', accent: '#ff1a1a' },
+            { id: 'sapphire', name: 'Sapphire Deep', start: '#001233', end: '#002855', accent: '#4cc9f0' },
+            { id: 'emerald', name: 'Emerald City', start: '#013a1a', end: '#014f25', accent: '#10b981' },
+            { id: 'amethyst', name: 'Amethyst Geode', start: '#240046', end: '#5a189a', accent: '#c77dff' },
+            { id: 'tokyo', name: 'Tokyo Night', start: '#19002e', end: '#3a0ca3', accent: '#f72585' },
+            { id: 'mami', name: 'Miami Vice', start: '#c71585', end: '#4b0082', accent: '#00ffff' },
+            { id: 'nordic', name: 'Nordic Frost', start: '#2e3440', end: '#4c566a', accent: '#88c0d0' },
+            { id: 'graphite', name: 'Graphite', start: '#212121', end: '#424242', accent: '#e0e0e0' },
+            { id: 'sepia', name: 'Old Sepia', start: '#3e2723', end: '#5d4037', accent: '#d7ccc8' },
+            { id: 'cotton', name: 'Cotton Candy', start: '#ffcbf2', end: '#a2d2ff', accent: '#ffffff' },
+            { id: 'cyber', name: 'Cyber Yellow', start: '#1a1a00', end: '#333300', accent: '#ffff00' },
+            { id: 'bordeaux', name: 'Bordeaux Wine', start: '#2b0000', end: '#5c001e', accent: '#ff6b81' },
+            { id: 'gunmetal', name: 'Gunmetal', start: '#263238', end: '#37474f', accent: '#90a4ae' },
+            { id: 'sky', name: 'Deep Sky', start: '#0c4a6e', end: '#075985', accent: '#7dd3fc' },
+            { id: 'rose', name: 'Dusty Rose', start: '#4a0404', end: '#7f1d1d', accent: '#fda4af' },
+            { id: 'storm', name: 'Stormy Night', start: '#1f2937', end: '#374151', accent: '#fbbf24' },
+            { id: 'moss', name: 'Spanish Moss', start: '#354f52', end: '#52796f', accent: '#cad2c5' },
+            { id: 'pumpkin', name: 'Spiced Pumpkin', start: '#7c2d12', end: '#9a3412', accent: '#fdba74' },
+            { id: 'void', name: 'The Void', start: '#000000', end: '#0a0a0a', accent: '#ffffff' },
+            { id: 'indigo', name: 'Indigo Flow', start: '#312e81', end: '#4338ca', accent: '#818cf8' },
+            { id: 'terminal', name: 'Retro Terminal', start: '#1a1a1a', end: '#0f0f0f', accent: '#39ff14' },
+            { id: 'coral', name: 'Living Coral', start: '#7f1d1d', end: '#991b1b', accent: '#ff7f50' },
+            { id: 'glacier', name: 'Glacier Blue', start: '#082f49', end: '#0369a1', accent: '#bae6fd' },
+            { id: 'plum', name: 'Sugar Plum', start: '#4a044e', end: '#701a75', accent: '#f0abfc' },
+            { id: 'sand', name: 'Desert Sand', start: '#451a03', end: '#78350f', accent: '#fcd34d' },
+            { id: 'teal', name: 'Teal Depth', start: '#042f2e', end: '#115e59', accent: '#5eead4' },
+            { id: 'blueprint', name: 'Blueprint', start: '#1e3a8a', end: '#1d4ed8', accent: '#ffffff' }
+        ];
+        
+        let unlockedThemes = ['default']; // Only default unlocked initially
+        let isPremium = false;
+        let currentPlan = null;
+        let stepsRemaining = 250; // Initial steps
+
+        function updateStepsDisplay() {
+            document.getElementById('stepsCount').textContent = stepsRemaining.toLocaleString();
+        }
+
+        function populateThemeGrid() {
+            const grid = document.getElementById('themeGrid');
+            grid.innerHTML = '';
+            themes.forEach(theme => {
+                const isLocked = !unlockedThemes.includes(theme.id);
+                
+                // Create wrapper for swatch + name
+                const wrapper = document.createElement('div');
+                wrapper.className = 'theme-wrapper';
+                wrapper.title = theme.name;
+                wrapper.onclick = () => {
+                    if (!isLocked) {
+                        applyTheme(theme.id);
+                    } else {
+                        closeThemeStoreModal();
+                        showPremiumModal();
+                    }
+                };
+
+                // Create swatch
+                const option = document.createElement('div');
+                option.className = `theme-option ${isLocked ? 'locked' : ''}`;
+                option.style.background = `linear-gradient(135deg, ${theme.start}, ${theme.end})`;
+                
+                // Create name label
+                const nameLabel = document.createElement('div');
+                nameLabel.className = 'theme-name';
+                nameLabel.textContent = theme.name;
+
+                wrapper.appendChild(option);
+                wrapper.appendChild(nameLabel);
+                grid.appendChild(wrapper);
+            });
+        }
+
+        function applyTheme(themeId) {
+            const theme = themes.find(t => t.id === themeId);
+            if (!theme) return;
+            
+            const root = document.documentElement;
+            
+            if (themeId === 'default') {
+                // Reset to CSS defaults by removing inline styles
+                root.style.removeProperty('--bg-app');
+                root.style.removeProperty('--bg-gradient-start');
+                root.style.removeProperty('--bg-gradient-end');
+                root.style.removeProperty('--bg-glass');
+                root.style.removeProperty('--accent-primary');
+                root.style.removeProperty('--accent-highlight');
+            } else {
+                // Apply dynamic theme
+                root.style.setProperty('--bg-app', theme.start);
+                root.style.setProperty('--bg-gradient-start', theme.start);
+                root.style.setProperty('--bg-gradient-end', theme.end);
+                // Calculate a slightly transparent version of start color for glass effect if needed, 
+                // or just use start color for simplicity in this vast list
+                root.style.setProperty('--bg-glass', `${theme.start}BF`); // BF is ~75% opacity hex
+                root.style.setProperty('--accent-primary', theme.accent);
+                // Simple highlight derivation (just same accent for now to save complexity)
+                root.style.setProperty('--accent-highlight', theme.accent);
+            }
+        }
+
+        function unlockAllThemes() {
+            closeThemeStoreModal();
+            showPremiumModal();
+        }
+
+        // Temporary Premium Activation
+        function activatePremium(planName, steps) {
+            isPremium = true;
+            currentPlan = planName;
+            unlockedThemes = themes.map(t => t.id);
+            stepsRemaining += steps;
+            updateStepsDisplay();
+            populateThemeGrid();
+            
+            // Update UI
+            updatePremiumModalUI();
+            const premiumBtn = document.getElementById('sidebarPremiumBtn');
+            if (premiumBtn) {
+                 premiumBtn.textContent = 'Active';
+                 premiumBtn.disabled = false; // Removed disabled state so it can be clicked to view plan
+                 premiumBtn.style.opacity = '1';
+            }
+
+            closePremiumModal();
+            closeThemeStoreModal();
+
+            // Show success message
+            const successMsg = document.getElementById('successMessage');
+            if (successMsg) {
+                successMsg.textContent = `🌟 ${planName} activated! +${steps.toLocaleString()} steps.`;
+                successMsg.classList.add('active');
+                setTimeout(() => successMsg.classList.remove('active'), 4000);
+            }
+        }
+
+        function downgradeToFree() {
+            isPremium = false;
+            currentPlan = null;
+            unlockedThemes = ['default'];
+            // Reset to default theme to avoid using locked themes
+            applyTheme('default');
+            populateThemeGrid();
+            updatePremiumModalUI();
+
+            const premiumBtn = document.getElementById('sidebarPremiumBtn');
+             if (premiumBtn) {
+                 premiumBtn.textContent = 'Upgrade';
+             }
+             closePremiumModal();
+        }
+
+        function updatePremiumModalUI() {
+           // Reset all buttons
+           document.getElementById('btn-shy').textContent = 'Select';
+           document.getElementById('btn-shy').disabled = false;
+           document.getElementById('btn-community').textContent = 'Select';
+           document.getElementById('btn-community').disabled = false;
+           document.getElementById('btn-super').textContent = 'Select';
+           document.getElementById('btn-super').disabled = false;
+
+           // Disable current plan button
+           if (isPremium && currentPlan) {
+               let activeBtn;
+               if (currentPlan === 'Shy Member') activeBtn = document.getElementById('btn-shy');
+               if (currentPlan === 'Community Member') activeBtn = document.getElementById('btn-community');
+               if (currentPlan === 'Super Member') activeBtn = document.getElementById('btn-super');
+               // Handle Demo mode case if needed, or just leave it unlocked without specific plan highlight
+               if (currentPlan === 'Demo Mode') { /* Optional: highlight all or none */ }
+
+               if (activeBtn) {
+                   activeBtn.textContent = 'Current Plan';
+                   activeBtn.disabled = true;
+               }
+               document.getElementById('downgradeOption').style.display = 'block';
+           } else {
+               document.getElementById('downgradeOption').style.display = 'none';
+           }
+        }
+
+        // Secret demo function
+        function demoUnlockThemes() {
+            activatePremium('Demo Mode', 99999);
+        }
+        
+        // Reveal demo button with secret key combo (e.g., holding Shift + Alt + D)
+        document.addEventListener('keydown', (e) => {
+             if (e.shiftKey && e.altKey && e.key.toLowerCase() === 'd') {
+                 const demoBtn = document.getElementById('demoThemesBtn');
+                 demoBtn.style.opacity = '1';
+                 demoBtn.style.pointerEvents = 'auto';
+             }
+        });
+
+        function populateLanguageGrid() {
+            const grid = document.getElementById('languageGrid');
+            grid.innerHTML = '';
+            languages.forEach(lang => {
+                const card = document.createElement('div');
+                card.className = `language-card ${lang.isSpecial ? 'special-card' : ''}`;
+                card.onclick = () => selectLanguage(lang.id, lang.name);
+                card.dataset.name = lang.name.toLowerCase();
+
+                let iconContent;
+                if (lang.img) {
+                    iconContent = `<img src="images/${lang.img}" alt="${lang.name}" onerror="this.parentNode.innerText='${lang.name[0]}' ">`;
+                } else {
+                    iconContent = lang.icon || lang.name[0];
+                }
+
+                card.innerHTML = `
+                    <div class="lang-icon">${iconContent}</div>
+                    <div class="lang-info">
+                        <div class="lang-name">${lang.name}</div>
+                        <div class="lang-desc">${lang.desc}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterLanguages() {
+            const query = document.getElementById('languageSearch').value.toLowerCase();
+            document.querySelectorAll('.language-card').forEach(card => {
+                card.style.display = card.dataset.name.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        function selectLanguage(id, name) {
+            let select = document.getElementById('languageSelect');
+            if (!select.querySelector(`option[value="${id}"]`)) {
+                const opt = document.createElement('option');
+                opt.value = id; opt.textContent = name; select.appendChild(opt);
+            }
+            select.value = id;
+            select.dispatchEvent(new Event('change'));
+            document.getElementById('currentLanguageLabel').textContent = name;
+            document.getElementById('languageTrigger').classList.add('active-lang');
+            closeLanguageModal();
+
+            const customInput = document.getElementById('customLanguageInput');
+            if (id === 'custom') {
+                 customInput.classList.remove('hidden'); customInput.focus();
+            } else {
+                 customInput.classList.add('hidden');
+            }
+            
+            checkSelections();
+        }
+
+        function openLanguageModal() {
+            populateLanguageGrid();
+            document.getElementById('languageModal').classList.add('active');
+            setTimeout(() => document.getElementById('languageSearch').focus(), 100);
+        }
+        function closeLanguageModal() { document.getElementById('languageModal').classList.remove('active'); }
+        function showStoreModal() { document.getElementById('storeModal').classList.add('active'); }
+        function closeStoreModal() { document.getElementById('storeModal').classList.remove('active'); }
+
+        const viewerObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.target.id === 'challengeViewer' && mutation.attributeName === 'class') {
+                    const isNowActive = mutation.target.classList.contains('active');
+                    document.getElementById('mainContentArea').classList.toggle('has-viewer', isNowActive);
+                }
+            });
+        });
+        viewerObserver.observe(document.getElementById('challengeViewer'), { attributes: true });
+
+        function closeViewer() {
+            document.getElementById('challengeViewer').classList.remove('active');
+            document.getElementById('creatorPanel').style.display = 'flex';
+        }
+        
+        function checkSelections() {
+            const language = document.getElementById('languageSelect').value;
+            const difficulty = document.getElementById('difficultySelect').value;
+            const customLanguage = document.getElementById('customLanguageInput').value;
+            
+            let isLanguageValid = language !== "";
+            if (language === 'custom') {
+                isLanguageValid = customLanguage.trim() !== "";
+            }
+
+            const isDifficultyValid = difficulty !== "";
+            
+            document.getElementById('generateBtn').disabled = !(isLanguageValid && isDifficultyValid);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+             // No default selections anymore
+             // selectLanguage('javascript', 'JavaScript'); 
+             populateThemeGrid(); // Initialize theme grid
+             updateStepsDisplay();
+             updatePremiumModalUI();
+             
+             // Add click listeners to modals for background dismissal
+             document.querySelectorAll('.modal').forEach(modal => {
+                 modal.addEventListener('click', (e) => {
+                     if (e.target === modal) {
+                         modal.classList.remove('active');
+                     }
+                 });
+             });
+        });
+
+        window.showPremiumModal = () => document.getElementById('premiumModal').classList.add('active');
+        window.closePremiumModal = () => document.getElementById('premiumModal').classList.remove('active');
+        window.showThemeStoreModal = () => document.getElementById('themeStoreModal').classList.add('active');
+        window.closeThemeStoreModal = () => document.getElementById('themeStoreModal').classList.remove('active');
+        
+        window.toggleSidebar = () => {
+            const sidebar = document.querySelector('.sidebar');
+            const btn = document.getElementById('toggleSidebarBtn');
+            sidebar.classList.toggle('hidden');
+            btn.classList.toggle('collapsed');
+        };
+    </script>
+</body>
+</html>
