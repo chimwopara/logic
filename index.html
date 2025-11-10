@@ -506,6 +506,193 @@
              color: var(--error);
         }
 
+        /* --- Mobile Friendliness --- */
+
+@media (max-width: 768px) {
+    body {
+        /* Use 16px base on mobile for better readability 
+           and to prevent iOS from zooming in on text inputs */
+        font-size: 16px; 
+    }
+
+    .container {
+        padding: 8px;
+        gap: 8px;
+        /* Allow vertical scrolling on mobile if content overflows */
+        overflow-y: auto; 
+        height: auto;
+        min-height: 100vh;
+    }
+
+    /* --- Sidebar: Becomes an overlay --- */
+    .sidebar {
+        position: fixed;
+        top: 8px; /* Match container padding */
+        left: 8px; /* Match container padding */
+        bottom: 8px;
+        height: auto; /* Fill height */
+        z-index: 1000;
+        /* The existing .hidden class's transform works perfectly */
+        transition: transform 0.4s var(--ease-spring);
+    }
+
+    /* This class is ADDED by JS, so it's the "visible" state */
+    .sidebar:not(.hidden) {
+        transform: translateX(0);
+    }
+    
+    /* This class is REMOVED by JS, so we need to reset the margin */
+    .sidebar.hidden {
+        /* Override desktop margin-left */
+        margin-left: 0; 
+    }
+
+    /* --- Main Content: Always full width --- */
+    .main-content {
+        /* It's no longer side-by-side */
+        flex: 1 1 100%;
+    }
+
+    /* --- Greeting: Smaller text --- */
+    .greeting h1 {
+        font-size: 2.2rem;
+        margin-bottom: 16px;
+    }
+    .greeting p {
+        font-size: 1.1rem;
+    }
+
+    .prompt-container {
+        padding: 24px 16px;
+    }
+
+    .input-area-wrapper {
+        padding: 0 8px;
+        margin-bottom: 24px;
+    }
+
+    /* --- Input: Better iOS Experience --- */
+    textarea#questionInput {
+        font-size: 1rem; /* 16px to prevent iOS zoom */
+    }
+    .input-container {
+        padding: 12px;
+        border-radius: 20px;
+    }
+
+    /* --- Split View: Stacked, not side-by-side --- */
+    .content-area.has-viewer {
+         /* On mobile, just show the viewer, hide the prompt */
+        display: block;
+    }
+    .content-area.has-viewer .creator-panel {
+        display: none; /* Hide creator when viewer is active */
+    }
+    .content-area.has-viewer .challenge-viewer {
+        max-width: 100%;
+        border-left: none; /* No border when full-width */
+        position: absolute; /* Take over full space */
+        inset: 0;
+        height: 100%;
+    }
+    
+    /* --- Modals: Adjust for smaller screens --- */
+    /* Target modals using their existing inline styles or IDs */
+    .modal-content,
+    .language-modal-content,
+    div[style*="max-width: 450px"],  /* Target #storeModal */
+    div[style*="max-width: 1000px"], /* Target #themeStoreModal */
+    div[style*="max-width: 900px"] {  /* Target #premiumModal */
+        /* Use !important to override inline styles */
+        width: 95% !important;
+        max-width: 95% !important;
+        padding: 24px !important;
+        max-height: 90vh;
+    }
+    
+    /* Target modal titles (some are inline-styled) */
+    .modal-title-text,
+    h2[style*="font-size: 2.5rem"], /* Modal titles */
+    h3[style*="font-size: 2.5rem"] {
+        font-size: 1.8rem !important;
+        margin-bottom: 24px !important;
+    }
+    
+    h2[style*="font-size: 2rem"] { /* Store title */
+         font-size: 1.6rem !important;
+    }
+    p[style*="font-size: 1.2rem"] { /* Store subtitle */
+        font-size: 1rem !important;
+    }
+
+    /* --- Premium Plans: Stack 'em --- */
+    .premium-plans-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    /* --- Language Grid: Tweak for mobile */
+    .language-grid {
+         grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+         gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* --- Input Footer: Stack for narrow phones --- */
+    .input-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+    .input-tools {
+        justify-content: center;
+        flex-wrap: wrap; /* Allow tools to wrap if needed */
+        gap: 10px;
+    }
+    .send-btn {
+        width: 100%;
+        height: 48px;
+        border-radius: 16px;
+        padding: 10px;
+    }
+    .send-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    /* Make selects take more space */
+    .minimal-select,
+    #languageTrigger {
+        flex-grow: 1;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    #customLanguageInput {
+        width: 100%;
+        text-align: center;
+    }
+    
+    /* Tighter grids for small phones */
+    .theme-grid {
+         grid-template-columns: repeat(3, 1fr);
+         gap: 12px;
+    }
+    .language-grid {
+         grid-template-columns: repeat(2, 1fr);
+         gap: 8px;
+    }
+    .lang-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    .lang-name {
+        font-size: 0.9rem;
+    }
+}
+
     </style>
 </head>
 <body>
