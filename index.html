@@ -644,9 +644,9 @@
 @media (max-width: 480px) {
     /* --- Input Footer: Stack for narrow phones --- */
     .input-footer {
-                flex-direction: column;
-                align-items: center; /* <-- This is the change */
-                gap: 16px;
+                /* Removed 'flex-direction: column' to keep tools and button in a row */
+                /* Removed 'align-items: center' to allow default 'space-between' */
+                gap: 10px; /* Reduced gap to help items fit on small screens */
             }
     .input-tools {
         justify-content: center;
@@ -787,13 +787,13 @@
                             <div class="input-footer">
                                 <div class="input-tools">
                                     <button id="languageTrigger" class="minimal-btn" onclick="openLanguageModal()">
-                                        <span id="currentLanguageLabel">Select Language...</span>
+                                        <span id="currentLanguageLabel">language...</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                     </button>
 
                                     <!-- Hidden select for form submission/logic -->
                                     <select id="languageSelect" style="display: none;">
-                                        <option value="" disabled selected>Select Language</option>
+                                        <option value="" disabled selected>Language</option>
                                         <option value="javascript">JavaScript</option>
                                         <option value="python">Python</option>
                                         <option value="c">C</option>
@@ -801,7 +801,7 @@
                                     </select>
                                     
                                     <select id="difficultySelect" class="minimal-select" onchange="checkSelections()">
-                                        <option value="" disabled selected>Select Difficulty...</option>
+                                        <option value="" disabled selected>Difficulty...</option>
                                         <option value="beginner">Beginner</option>
                                         <option value="intermediate">Intermediate</option>
                                         <option value="advanced">Advanced</option>
