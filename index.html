@@ -527,8 +527,8 @@
     /* --- Sidebar: Becomes an overlay --- */
     .sidebar {
         position: fixed;
-        top: 8px; /* Match container padding */
-        left: 8px; /* Match container padding */
+        top: 8px;
+        left: 8px;
         bottom: 8px;
         height: auto; /* Fill height */
         z-index: 1000;
@@ -545,6 +545,11 @@
     .sidebar.hidden {
         /* Override desktop margin-left */
         margin-left: 0; 
+    }
+    
+    /* ENSURE BUTTON IS VISIBLE ABOVE SIDEBAR OVERLAY */
+    .toggle-sidebar-btn {
+        z-index: 1001;
     }
 
     /* --- Main Content: Always full width --- */
@@ -596,18 +601,19 @@
         height: 100%;
     }
     
-    /* --- Modals: Adjust for smaller screens --- */
-    /* Target modals using their existing inline styles or IDs */
+    /* --- Modals: Adjust for smaller screens AND ENABLE SCROLLING --- */
+    /* Use !important to override inline styles from HTML */
     .modal-content,
     .language-modal-content,
-    div[style*="max-width: 450px"],  /* Target #storeModal */
-    div[style*="max-width: 1000px"], /* Target #themeStoreModal */
-    div[style*="max-width: 900px"] {  /* Target #premiumModal */
-        /* Use !important to override inline styles */
+    #storeModal > div,      /* Directly target the inner div of store modal */
+    #themeStoreModal > div, /* Directly target the inner div of theme store modal */
+    #premiumModal > div {   /* Directly target the inner div of premium modal */
         width: 95% !important;
         max-width: 95% !important;
         padding: 24px !important;
-        max-height: 90vh;
+        max-height: 90vh;    /* Cap height at 90% of viewport */
+        overflow-y: auto;    /* Enable vertical scrolling if content is taller */
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
     }
     
     /* Target modal titles (some are inline-styled) */
