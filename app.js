@@ -416,4 +416,11 @@ window.addEventListener('message', (event) => {
             }
         }
     }
+    
+    // Handle share challenge action from iframe
+    if (event.data.action === 'shareChallenge') {
+        if (typeof window.shareCurrentChallenge === 'function') {
+            window.shareCurrentChallenge();
+        }
+    }
 });

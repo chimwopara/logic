@@ -1288,6 +1288,12 @@ const netStarsGained = starCount - initialStarsForLevelAttempt;
             <button id="reattempt-btn" class="glass-btn">
                 <span style="margin-right: 6px;">↻</span> Re-attempt
             </button>
+            <button id="solve-differently-btn" class="glass-btn">
+                <span style="margin-right: 6px;">🔄</span> Solve Differently
+            </button>
+            <button id="share-btn" class="glass-btn" style="background: rgba(10, 132, 255, 0.2); border-color: var(--accent-primary);">
+                <span style="margin-right: 6px;">🔗</span> Share with Community
+            </button>
             ${!isLastLevel ? `
                 <button id="next-btn" class="glass-btn">
                     <span style="margin-right: 6px;">→</span> Next Level
@@ -1300,6 +1306,23 @@ const netStarsGained = starCount - initialStarsForLevelAttempt;
 // Add event handlers for the new buttons
             document.getElementById('reattempt-btn')?.addEventListener('click', () => {
                 showReattemptMessage();
+            });
+            
+            document.getElementById('solve-differently-btn')?.addEventListener('click', () => {
+                // Reset and restart with different approach
+                starCount = initialStarsForLevelAttempt;
+                updateStarDisplay();
+                saveStarCount();
+                initializeGame(currentLevelIndex);
+            });
+            
+            document.getElementById('share-btn')?.addEventListener('click', () => {
+                // Send message to parent to share the challenge
+                if (typeof parent !== 'undefined' && parent !== window) {
+                    parent.postMessage({
+                        action: 'shareChallenge'
+                    }, '*');
+                }
             });
 
             if (!isLastLevel) {
