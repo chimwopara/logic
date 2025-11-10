@@ -759,7 +759,7 @@
 
             <div class="sidebar-footer">
                 <div class="mini-stats" style="justify-content: center; gap: 20px;">
-                     <span style="font-size: 0.9rem;">Steps: <strong id="stepsCount" class="text-accent" style="font-size: 1rem;">250</strong></span>
+                     <span style="font-size: 0.9rem;">Lines: <strong id="linesCount" class="text-accent" style="font-size: 1rem;">250</strong></span>
                      <button id="sidebarPremiumBtn" class="minimal-btn" onclick="showPremiumModal()" style="padding: 4px 12px; font-size: 0.85rem; background: rgba(10, 132, 255, 0.15); color: var(--accent-primary); font-weight: 600; border: 1px solid rgba(10, 132, 255, 0.2);">Upgrade</button>
                 </div>
 
@@ -897,7 +897,7 @@
                      <h4 style="font-size: 1.4rem; font-weight: 700;">Shy Member</h4>
                      <div style="font-size: 2rem; font-weight: 800;">$4.99<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/mo</span></div>
                      <ul style="text-align: left; color: var(--text-secondary); font-size: 1rem; padding-left: 20px; margin-bottom: auto; list-style-type: disc; line-height: 1.5;">
-                         <li>1,000 monthly output steps</li>
+                         <li>1,000 monthly output lines</li>
                          <li>Unlimited theme access</li>
                      </ul>
                      <button id="btn-shy" class="minimal-btn" onclick="activatePremium('Shy Member', 1000)" style="width: 100%; justify-content: center; background: rgba(255,255,255,0.1); margin-top: 24px; padding: 12px; font-size: 1rem;">Select</button>
@@ -909,7 +909,7 @@
                      <h4 style="font-size: 1.4rem; font-weight: 700; color: var(--accent-primary);">Community Member</h4>
                      <div style="font-size: 2rem; font-weight: 800;">$9.99<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/mo</span></div>
                      <ul style="text-align: left; color: var(--text-secondary); font-size: 1rem; padding-left: 20px; margin-bottom: auto; list-style-type: disc; line-height: 1.5;">
-                         <li>5,000 monthly output steps</li>
+                         <li>5,000 monthly output lines</li>
                          <li>Access Challenge Store</li>
                          <li>Unlimited theme access</li>
                      </ul>
@@ -921,7 +921,7 @@
                      <h4 style="font-size: 1.4rem; font-weight: 700;">Super Member</h4>
                      <div style="font-size: 2rem; font-weight: 800;">$19.99<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/mo</span></div>
                      <ul style="text-align: left; color: var(--text-secondary); font-size: 1rem; padding-left: 20px; margin-bottom: auto; list-style-type: disc; line-height: 1.5;">
-                         <li>10,000 monthly output steps</li>
+                         <li>10,000 monthly output lines</li>
                          <li>Earn from uploads (1¢/use)</li>
                          <li>Priority processing</li>
                          <li>All previous perks</li>
@@ -929,7 +929,7 @@
                      <button id="btn-super" class="minimal-btn" onclick="activatePremium('Super Member', 10000)" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #5e5ce6, #bf5af2); color: white; margin-top: 24px; padding: 12px; font-size: 1rem; border: none;">Select</button>
                  </div>
              </div>
-             <p style="text-align: center; color: rgba(255,255,255,0.5); margin-top: 32px; font-size: 1rem; font-weight: 500;">Free plan includes 250 output steps monthly.</p>
+             <p style="text-align: center; color: rgba(255,255,255,0.5); margin-top: 32px; font-size: 1rem; font-weight: 500;">Free plan includes 250 output lines monthly.</p>
              
              <div id="downgradeOption" onclick="downgradeToFree()">
                  Return to Free Plan
@@ -1013,10 +1013,10 @@
         let unlockedThemes = ['default']; // Only default unlocked initially
         let isPremium = false;
         let currentPlan = null;
-        let stepsRemaining = 250; // Initial steps
+        let linesRemaining = 250; // Initial lines
 
-        function updateStepsDisplay() {
-            document.getElementById('stepsCount').textContent = stepsRemaining.toLocaleString();
+        function updatelinesDisplay() {
+            document.getElementById('linesCount').textContent = linesRemaining.toLocaleString();
         }
 
         function populateThemeGrid() {
@@ -1090,12 +1090,12 @@
         }
 
         // Temporary Premium Activation
-        function activatePremium(planName, steps) {
+        function activatePremium(planName, lines) {
             isPremium = true;
             currentPlan = planName;
             unlockedThemes = themes.map(t => t.id);
-            stepsRemaining += steps;
-            updateStepsDisplay();
+            linesRemaining += lines;
+            updatelinesDisplay();
             populateThemeGrid();
             
             // Update UI
@@ -1113,7 +1113,7 @@
             // Show success message
             const successMsg = document.getElementById('successMessage');
             if (successMsg) {
-                successMsg.textContent = `🌟 ${planName} activated! +${steps.toLocaleString()} steps.`;
+                successMsg.textContent = `🌟 ${planName} activated! +${lines.toLocaleString()} lines.`;
                 successMsg.classList.add('active');
                 setTimeout(() => successMsg.classList.remove('active'), 4000);
             }
@@ -1276,7 +1276,7 @@
              // No default selections anymore
              // selectLanguage('javascript', 'JavaScript'); 
              populateThemeGrid(); // Initialize theme grid
-             updateStepsDisplay();
+             updatelinesDisplay();
              updatePremiumModalUI();
              loadChallengeStore(); // Load shared challenges
              
@@ -1410,7 +1410,7 @@
                     <span>•</span>
                     <span>${challenge.difficulty}</span>
                     <span>•</span>
-                    <span>${challenge.steps} steps</span>
+                    <span>${challenge.lines} lines</span>
                 `;
                 
                 const date = document.createElement('div');
@@ -1468,7 +1468,7 @@
                 language: currentChallenge.language,
                 difficulty: currentChallenge.difficulty,
                 challengeData: currentChallenge.challenge,
-                steps: currentChallenge.challenge.sequence.length,
+                lines: currentChallenge.challenge.sequence.length,
                 sharedAt: new Date().toISOString(),
                 sharedBy: 'You'
             };
