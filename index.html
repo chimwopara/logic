@@ -435,13 +435,41 @@
         .hidden { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        .status-area { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .status-area {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 2000; /* Ensures it's on top of modals */
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-end; /* Makes alerts align to the right */
+    width: auto;
+    pointer-events: none; /* Allows clicking through the empty area */
+}
         .loading-indicator { display: none; align-items: center; gap: 10px; color: var(--text-secondary); font-weight: 500; }
         .loading-indicator.active { display: flex; }
         .spinner { width: 20px; height: 20px; border: 2.5px solid rgba(255,255,255,0.2); border-top-color: var(--accent-primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .error-message, .success-message { padding: 10px 14px; border-radius: 10px; font-size: 0.9rem; font-weight: 500; display: none; backdrop-filter: blur(10px); }
-        .error-message.active, .success-message.active { display: block; animation: slideUp 0.3s ease; }
+        .error-message, .success-message { 
+    padding: 12px 40px 12px 18px;
+    border-radius: 12px;
+    font-size: 0.9rem; 
+    font-weight: 500; 
+    display: none;
+    backdrop-filter: blur(10px);
+    position: relative;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    border: 1px solid var(--border-glass);
+    pointer-events: auto;
+    max-width: 350px;
+    align-items: center;
+}
+        .error-message.active, .success-message.active { 
+    display: flex; 
+    align-items: center;
+    animation: slideUp 0.3s ease; 
+}
         .error-message { background: rgba(255, 69, 58, 0.2); color: #ff7b7b; }
         .success-message { background: rgba(48, 209, 88, 0.2); color: #6bff87; }
 
@@ -639,7 +667,43 @@
          grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
          gap: 10px;
     }
+
+} /* <-- ADDED THIS CLOSING BRACE to end the @media query */
+
+/* --- GLOBAL ALERT STYLES (Moved from mobile) --- */
+.alert-text {
+    /* flex: 1; -- Removed, no longer a flex item */
+    word-break: break-word; /* Prevents long text from breaking layout */
 }
+
+.alert-close-btn {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    z-index: 10;
+}
+.alert-close-btn:hover {
+    background: rgba(0,0,0,0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+/* The original closing brace for the @media query was here and is now moved up */
 
 @media (max-width: 480px) {
     /* --- Input Footer: Stack for narrow phones --- */
@@ -819,15 +883,7 @@
                             </div>
                         </div>
                         
-                        <div class="status-area">
-                            <div class="loading-indicator" id="loadingIndicator">
-                                <div class="spinner"></div>
-                                <span>Designing your challenge...</span>
-                            </div>
-                            <div class="error-message" id="errorMessage"></div>
-                            <div class="success-message" id="successMessage"></div>
                         </div>
-                    </div>
                 </div>
                 
                 <div class="challenge-viewer" id="challengeViewer">
@@ -842,6 +898,22 @@
                     </div>
                 </div>
             </div>
+
+    <div class="status-area">
+    <div class="loading-indicator" id="loadingIndicator">
+        <div class="spinner"></div>
+        <span>Designing your challenge...</span>
+    </div>
+    <div class="error-message" id="errorMessage">
+    <span class="alert-text"></span>
+    <button class="alert-close-btn" onclick="this.parentElement.classList.remove('active')" aria-label="Close">×</button>
+</div>
+<div class="success-message" id="successMessage">
+    <span class="alert-text"></span>
+    <button class="alert-close-btn" onclick="this.parentElement.classList.remove('active')" aria-label="Close">×</button>
+</div>
+</div>
+</div>
         </div>
     </div>
 
@@ -892,15 +964,16 @@
              <h3 style="font-size: 2.5rem; margin-bottom: 40px; color: var(--text-primary); font-weight: 800; text-align: center; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Premium Plans</h3>
              
              <div class="premium-plans-container">
-                 <!-- Shy Member Option -->
+                 <!-- Boost Member Option -->
                  <div style="background: rgba(28, 28, 30, 0.8); backdrop-filter: blur(40px); border: 1px solid var(--border-glass); border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
-                     <h4 style="font-size: 1.4rem; font-weight: 700;">Shy Member</h4>
+                     <h4 style="font-size: 1.4rem; font-weight: 700;">Boost Member</h4>
                      <div style="font-size: 2rem; font-weight: 800;">$4.99<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/mo</span></div>
                      <ul style="text-align: left; color: var(--text-secondary); font-size: 1rem; padding-left: 20px; margin-bottom: auto; list-style-type: disc; line-height: 1.5;">
                          <li>1,000 monthly output lines</li>
                          <li>Unlimited theme access</li>
+                         <li>All previous perks</li>
                      </ul>
-                     <button id="btn-shy" class="minimal-btn" onclick="activatePremium('Shy Member', 1000)" style="width: 100%; justify-content: center; background: rgba(255,255,255,0.1); margin-top: 24px; padding: 12px; font-size: 1rem;">Select</button>
+                     <button id="btn-shy" class="minimal-btn" onclick="activatePremium('Boost Member', 1000)" style="width: 100%; justify-content: center; background: rgba(255,255,255,0.1); margin-top: 24px; padding: 12px; font-size: 1rem;">Select</button>
                  </div>
 
                  <!-- Community Member Option -->
@@ -912,6 +985,7 @@
                          <li>5,000 monthly output lines</li>
                          <li>Access Challenge Store</li>
                          <li>Unlimited theme access</li>
+                         <li>All previous perks</li>
                      </ul>
                      <button id="btn-community" class="minimal-btn" onclick="activatePremium('Community Member', 5000)" style="width: 100%; justify-content: center; background: var(--accent-primary); color: white; margin-top: 24px; padding: 12px; font-size: 1rem;">Select</button>
                  </div>
@@ -924,12 +998,13 @@
                          <li>10,000 monthly output lines</li>
                          <li>Earn from uploads (1¢/use)</li>
                          <li>Priority processing</li>
+                         <li>Build with other Languages</li>
                          <li>All previous perks</li>
                      </ul>
                      <button id="btn-super" class="minimal-btn" onclick="activatePremium('Super Member', 10000)" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #5e5ce6, #bf5af2); color: white; margin-top: 24px; padding: 12px; font-size: 1rem; border: none;">Select</button>
                  </div>
              </div>
-             <p style="text-align: center; color: rgba(255,255,255,0.5); margin-top: 32px; font-size: 1rem; font-weight: 500;">Free plan includes 250 output lines monthly.</p>
+             <p style="text-align: center; color: rgba(255,255,255,0.5); margin-top: 32px; font-size: 1rem; font-weight: 500;">Free plan includes 250 output lines monthly and 18 languages.</p>
              
              <div id="downgradeOption" onclick="downgradeToFree()">
                  Return to Free Plan
@@ -959,7 +1034,7 @@
             { id: 'swift', name: 'Swift', desc: 'iOS development', img: 'Swift.png' },
             { id: 'typescript', name: 'TypeScript', desc: 'Typed JavaScript', img: 'Typescrpt.png' },
             { id: 'zsh', name: 'Z Shell', desc: 'Extended shell', img: 'Z.png' },
-            { id: 'custom', name: 'Other', desc: 'Any language (1000★)', icon: '✨', isSpecial: true }
+            { id: 'custom', name: 'Other', desc: 'Non listed language', icon: '✨', isSpecial: true }
         ];
 
         // Themes Configuration - massively expanded with dynamic color definitions
@@ -1084,6 +1159,41 @@
         closeThemeStoreModal(); // Add this line to close modal on theme selection
     }
 
+        window.alertTimeout = null; // Timer to manage auto-dismiss
+
+        function showAlert(message, isError = false, duration = 5000) {
+    const successMsg = document.getElementById('successMessage');
+    const errorMsg = document.getElementById('errorMessage');
+    
+    // Pick which alert to show
+    const alertBox = isError ? errorMsg : successMsg;
+    const otherBox = isError ? successMsg : errorMsg;
+    
+    // Hide the other alert if it's showing
+    otherBox.classList.remove('active');
+    
+    // Set the text
+    const textSpan = alertBox.querySelector('.alert-text');
+    if (textSpan) {
+        textSpan.textContent = message;
+    }
+    
+    // Show the alert
+    alertBox.classList.add('active');
+    
+    // Clear any existing timer
+    if (window.alertTimeout) {
+        clearTimeout(window.alertTimeout);
+    }
+    
+    // Set a new timer to auto-dismiss
+    if (duration > 0) {
+        window.alertTimeout = setTimeout(() => {
+            alertBox.classList.remove('active');
+        }, duration);
+    }
+}
+
     function unlockAllThemes() {
             closeThemeStoreModal();
             showPremiumModal();
@@ -1111,12 +1221,7 @@
             closeThemeStoreModal();
 
             // Show success message
-            const successMsg = document.getElementById('successMessage');
-            if (successMsg) {
-                successMsg.textContent = `🌟 ${planName} activated! +${lines.toLocaleString()} lines.`;
-                successMsg.classList.add('active');
-                setTimeout(() => successMsg.classList.remove('active'), 4000);
-            }
+            showAlert(`🌟 ${planName} activated! +${lines.toLocaleString()} lines.`, false, 4000);
         }
 
         function downgradeToFree() {
@@ -1147,7 +1252,7 @@
            // Disable current plan button
            if (isPremium && currentPlan) {
                let activeBtn;
-               if (currentPlan === 'Shy Member') activeBtn = document.getElementById('btn-shy');
+               if (currentPlan === 'Boost Member') activeBtn = document.getElementById('btn-shy');
                if (currentPlan === 'Community Member') activeBtn = document.getElementById('btn-community');
                if (currentPlan === 'Super Member') activeBtn = document.getElementById('btn-super');
                // Handle Demo mode case if needed, or just leave it unlocked without specific plan highlight
