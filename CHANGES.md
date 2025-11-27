@@ -12,7 +12,7 @@ Added **two new buttons** after solving a challenge:
 - Great for practicing different problem-solving methods
 
 #### **"Share with Community" Button** 🔗
-- Shares completed challenges to the Challenge Store
+- Shares completed challenges to the CW Academy
 - Generates a unique shareable URL
 - Automatically copies link to clipboard
 - Other users can discover and play shared challenges
@@ -24,9 +24,9 @@ Added **two new buttons** after solving a challenge:
 
 ---
 
-### 2. **Challenge Store** 🏪
+### 2. **CW Academy** 🏪
 
-A fully functional community challenge store where users can:
+A fully functional community CW Academy where users can:
 
 - **Browse** challenges shared by other users
 - **View** challenge metadata (language, difficulty, steps)
@@ -40,7 +40,7 @@ A fully functional community challenge store where users can:
 - Persists using localStorage (ready for backend integration)
 - Shows "no challenges" message when empty
 
-**Access:** Click "Challenge Store" in the sidebar
+**Access:** Click "CW Academy" in the sidebar
 
 ---
 
@@ -53,7 +53,7 @@ A fully functional community challenge store where users can:
 
 #### **Sidebar Toggle Button Behavior**
 - **Automatically hides** when viewing:
-  - Challenge Store
+  - CW Academy
   - Theme Store
   - Premium/Upgrade modal
   - Language selector
@@ -92,7 +92,7 @@ A fully functional community challenge store where users can:
 #### **index.html Updates:**
 ```javascript
 ✅ Mobile fullscreen viewport
-✅ Challenge store modal with grid layout
+✅ CW Academy modal with grid layout
 ✅ Share functionality integration
 ✅ Mobile-specific CSS hiding toggle button
 ✅ Tap-to-dismiss functionality
@@ -114,7 +114,7 @@ A fully functional community challenge store where users can:
 ✅ Share challenge function
 ✅ Load shared challenge function
 ✅ Message listener for share action
-✅ Challenge store data management
+✅ CW Academy data management
 ```
 
 ---
@@ -142,11 +142,11 @@ ai-challenge-generator/
 1. Complete any challenge successfully
 2. Click "Share with Community" button
 3. Link is automatically copied to clipboard
-4. Challenge appears in Challenge Store for everyone
+4. Challenge appears in CW Academy for everyone
 
 ### **Playing Shared Challenges:**
 
-1. Open sidebar → "Challenge Store"
+1. Open sidebar → "CW Academy"
 2. Browse available challenges
 3. Click "Play Challenge" on any card
 4. Challenge loads in the viewer
@@ -179,7 +179,7 @@ Your design principles have been maintained:
 |---------|--------|----------|
 | Solve Differently Button | ✅ Complete | logicbody.html completion screen |
 | Share with Community | ✅ Complete | logicbody.html + index.html |
-| Challenge Store | ✅ Complete | index.html sidebar + modal |
+| CW Academy | ✅ Complete | index.html sidebar + modal |
 | Mobile Fullscreen | ✅ Complete | index.html viewport |
 | Hide Toggle on Modals | ✅ Complete | index.html CSS + JS |
 | Tap to Dismiss Sidebar | ✅ Complete | index.html event listeners |
@@ -198,7 +198,7 @@ Your design principles have been maintained:
 
 ## 📝 Notes for Developers
 
-### **Challenge Store Data Structure:**
+### **CW Academy Data Structure:**
 ```javascript
 {
   id: "ch_timestamp_randomid",
@@ -232,7 +232,7 @@ All features have been implemented and tested. The application now:
 1. ✅ Has the improved UI from your index.html
 2. ✅ Includes "Solve Differently" button
 3. ✅ Includes "Share with Community" button with URL generation
-4. ✅ Has a functional Challenge Store
+4. ✅ Has a functional CW Academy
 5. ✅ Works perfectly on mobile (fullscreen, proper sidebar behavior)
 6. ✅ Theme store fills the screen properly
 
@@ -244,7 +244,7 @@ All features have been implemented and tested. The application now:
 
 If you need any adjustments or have questions about the implementation, feel free to ask!
 
-**Remember:** The Challenge Store uses localStorage for now. For production, you'll want to add a backend API to store and retrieve shared challenges globally.
+**Remember:** The CW Academy uses localStorage for now. For production, you'll want to add a backend API to store and retrieve shared challenges globally.
 
 ---
 

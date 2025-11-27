@@ -16,9 +16,9 @@
 
 ---
 
-### 🏪 Challenge Store
+### 🏪 CW Academy
 
-**Access:** Sidebar → "Challenge Store"
+**Access:** Sidebar → "CW Academy"
 
 **Features:**
 - Browse all shared challenges
@@ -45,7 +45,7 @@
 
 **Toggle Button Rules:**
 - Shows: Main screen, challenge viewer
-- Hides: Challenge Store, Theme Store, Modals
+- Hides: CW Academy, Theme Store, Modals
 
 ---
 
@@ -103,7 +103,7 @@ https://yoursite.com/?challenge=ch_1699644123_abc123
 ### ✅ Implemented
 - Solve Differently button
 - Share with Community button
-- Challenge Store with cards
+- CW Academy with cards
 - Share URL generation
 - Clipboard auto-copy
 - Mobile fullscreen

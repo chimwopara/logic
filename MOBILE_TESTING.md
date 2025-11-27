@@ -19,7 +19,7 @@
 ### 2. **Sidebar Toggle Button Behavior** ✅
 
 #### **Should HIDE when:**
-- [ ] Opening Challenge Store
+- [ ] Opening CW Academy
 - [ ] Opening Theme Store
 - [ ] Opening Premium/Upgrade modal
 - [ ] Opening Language selector
@@ -32,7 +32,7 @@
 
 **How to Test:**
 1. Open app on mobile
-2. Click "Challenge Store" - toggle button should disappear
+2. Click "CW Academy" - toggle button should disappear
 3. Close modal - toggle button should reappear
 4. Repeat for Theme Store and other modals
 
@@ -52,7 +52,7 @@
 
 ---
 
-### 4. **Challenge Store on Mobile** ✅
+### 4. **CW Academy on Mobile** ✅
 - [ ] Grid layout adapts to screen width
 - [ ] Cards are touchable (not too small)
 - [ ] Smooth scrolling
@@ -61,7 +61,7 @@
 
 **How to Test:**
 1. Share a challenge on desktop
-2. Open Challenge Store on mobile
+2. Open CW Academy on mobile
 3. Verify cards display properly
 4. Tap a challenge to play it
 
@@ -168,8 +168,8 @@ npm start
 ### Test Flow:
 1. ✅ Open app - fullscreen?
 2. ✅ Toggle sidebar - button shows/hides?
-3. ✅ Open Challenge Store - button hides?
-4. ✅ Close Challenge Store - button shows?
+3. ✅ Open CW Academy - button hides?
+4. ✅ Close CW Academy - button shows?
 5. ✅ Tap main content with sidebar open - closes?
 6. ✅ Open Theme Store - fills screen?
 7. ✅ Complete challenge - all buttons visible?

@@ -24,7 +24,7 @@ Your product is being transformed from a **star-based** system to a more engagin
 - **Passive Income** (earn while you sleep from shared challenges)
 
 ### 3. Better UX
-- **Auto-sharing** to challenge store (no manual action needed)
+- **Auto-sharing** to CW Academy (no manual action needed)
 - **Serial numbers** for easy sharing (promptsandlogic.com/23b4yz)
 - **Auto-complete** finds similar challenges to save compute
 - **Fair pricing** based on actual usage (lines per interaction)

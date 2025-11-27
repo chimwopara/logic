@@ -289,7 +289,7 @@ async function generateChallenge() {
         }
         localStorage.setItem('challengeHistory', JSON.stringify(challengeHistory));
         
-        // Auto-add to challenge store
+        // Auto-add to CW Academy
         await addToStore(challengeEntry);
         
         // Load the challenge in the viewer
@@ -506,7 +506,7 @@ window.addEventListener('message', (event) => {
     }
 });
 
-// Load Challenge Store
+// Load CW Academy
 function loadChallengeStore() {
     const sharedChallenges = JSON.parse(localStorage.getItem('sharedChallenges') || '[]');
     const grid = document.getElementById('challengeStoreGrid');

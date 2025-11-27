@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="price">$0<span>/mo</span></div>
         <div class="lines-allocation">1,000 lines/mo</div>
         <ul class="features">
-            <li>✅ Challenge Store access</li>
+            <li>✅ CW Academy access</li>
             <li>✅ Create challenges</li>
             <li>✅ Earn from shares</li>
             <li>✅ Daily challenges</li>
