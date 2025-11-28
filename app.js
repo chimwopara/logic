@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// New Challenge
+// New P&L
 function newChallenge() {
     document.getElementById('creatorPanel').style.display = 'flex';
     document.getElementById('challengeViewer').classList.remove('active');

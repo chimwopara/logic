@@ -36,7 +36,7 @@ A fully functional community University where users can:
 **Features:**
 - Beautiful card-based grid layout
 - Hover effects and smooth animations
-- Auto-updates when new challenges are shared
+- Auto-updates when New P&Ls are shared
 - Persists using localStorage (ready for backend integration)
 - Shows "no challenges" message when empty
 
@@ -54,7 +54,7 @@ A fully functional community University where users can:
 #### **Sidebar Toggle Button Behavior**
 - **Automatically hides** when viewing:
   - University
-  - Theme Store
+  - Environment
   - Premium/Upgrade modal
   - Language selector
 - Returns when closing modals
@@ -73,7 +73,7 @@ A fully functional community University where users can:
 
 ---
 
-### 4. **Theme Store Fixes** 🎨
+### 4. **Environment Fixes** 🎨
 
 #### **Fixed Containment Issues**
 - Themes now properly fill the entire screen
@@ -97,7 +97,7 @@ A fully functional community University where users can:
 ✅ Mobile-specific CSS hiding toggle button
 ✅ Tap-to-dismiss functionality
 ✅ Modal state management
-✅ Theme store proper containment
+✅ Environment proper containment
 ```
 
 #### **logicbody.html Updates:**
@@ -183,7 +183,7 @@ Your design principles have been maintained:
 | Mobile Fullscreen | ✅ Complete | index.html viewport |
 | Hide Toggle on Modals | ✅ Complete | index.html CSS + JS |
 | Tap to Dismiss Sidebar | ✅ Complete | index.html event listeners |
-| Theme Store Containment | ✅ Complete | index.html modal styles |
+| Environment Containment | ✅ Complete | index.html modal styles |
 
 ---
 
@@ -234,7 +234,7 @@ All features have been implemented and tested. The application now:
 3. ✅ Includes "Share with Community" button with URL generation
 4. ✅ Has a functional University
 5. ✅ Works perfectly on mobile (fullscreen, proper sidebar behavior)
-6. ✅ Theme store fills the screen properly
+6. ✅ Environment fills the screen properly
 
 **No breaking changes** - All existing functionality preserved!
 

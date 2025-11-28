@@ -6,7 +6,7 @@
 
 ```
 □ Open http://localhost:3000
-□ Click "New Challenge"
+□ Click "New P&L"
 □ Select language (e.g., JavaScript)
 □ Select difficulty (medium)
 □ Enter question: "reverse a string"
@@ -22,7 +22,7 @@
 □ Verify your challenge appears
 □ Click "Play Challenge"
 □ Verify challenge loads
-□ Open "Theme Store"
+□ Open "Environment"
 □ Verify themes fill screen (no box)
 □ Toggle sidebar (button in top-left)
 □ Verify it collapses/expands
@@ -43,10 +43,10 @@
 □ Verify toggle button HIDES
 □ Close University
 □ Verify toggle button SHOWS
-□ Click "Theme Store"  
+□ Click "Environment"  
 □ Verify toggle button HIDES
 □ Verify themes fill screen
-□ Close Theme Store
+□ Close Environment
 □ Complete a challenge
 □ Verify all 3 buttons visible
 □ Click "Share"
@@ -142,7 +142,7 @@
 | Mobile Fullscreen | N/A | ✅ | Working |
 | Toggle Auto-Hide | N/A | ✅ | Working |
 | Tap to Dismiss | N/A | ✅ | Working |
-| Theme Store Fill | ✅ | ✅ | Fixed |
+| Environment Fill | ✅ | ✅ | Fixed |
 
 ---
 
@@ -245,7 +245,7 @@ Before deploying, confirm:
 ✅ Sharing generates valid URLs
 ✅ University displays cards
 ✅ Toggle button behaves correctly
-✅ Theme Store fills screen
+✅ Environment fills screen
 ✅ All three buttons visible on completion
 ✅ Documentation complete
 ```

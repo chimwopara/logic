@@ -104,7 +104,7 @@ Example: Your challenge gets used 100 times averaging 150 lines each:
 - You earn: **15,000 lines** (15 months of free tier!)
 
 ### 3. Daily Challenges
-- New challenge every day at midnight
+- New P&L every day at midnight
 - Build streaks for bonuses:
   - 3 days: +50 lines
   - 7 days: +150 lines
@@ -215,7 +215,7 @@ Smart search finds similar challenges before creating new ones:
 
 **Key routes:**
 - `GET /:serial` - Load challenge by serial number
-- `POST /api/generate-challenge` - Generate new challenge
+- `POST /api/generate-challenge` - Generate New P&L
 - `POST /api/track-lines` - Track line usage
 - `GET /api/daily-challenge` - Get today's challenge
 

@@ -105,7 +105,7 @@ http://localhost:3000
 #### ✅ **Smart Toggle Button**
 - **Auto-hides** when viewing:
   - University
-  - Theme Store
+  - Environment
   - Upgrade modal
   - Language selector
 - **Shows** when back to main screen
@@ -125,7 +125,7 @@ http://localhost:3000
 
 ---
 
-### 4. Theme Store Fix 🎨
+### 4. Environment Fix 🎨
 
 **Before:** Themes in awkward scrollable box
 **After:** Themes fill entire screen naturally
@@ -159,14 +159,14 @@ All your design principles maintained:
 - ❌ Not fullscreen
 - ❌ Toggle button always visible
 - ❌ Can't dismiss sidebar easily
-- ❌ Theme store has weird box
+- ❌ Environment has weird box
 - ❌ Buttons might be too small
 
 ### After:
 - ✅ True fullscreen
 - ✅ Toggle button hides intelligently
 - ✅ Tap content to dismiss sidebar
-- ✅ Theme store fills screen
+- ✅ Environment fills screen
 - ✅ All buttons touch-friendly
 
 ---
@@ -300,7 +300,7 @@ function updateToggleButtonVisibility() {
 - [ ] Test all three buttons
 - [ ] Test University
 - [ ] Test mobile sidebar behavior
-- [ ] Test theme store scrolling
+- [ ] Test Environment scrolling
 
 ### Production Ready:
 - ✅ All features working
@@ -342,7 +342,7 @@ function updateToggleButtonVisibility() {
 ✅ **Mobile fullscreen** - iOS & Android
 ✅ **Hide toggle in modals** - Smart behavior
 ✅ **Tap to dismiss sidebar** - On mobile
-✅ **Theme store containment** - Fixed layout
+✅ **Environment containment** - Fixed layout
 
 ### Bonus Features:
 

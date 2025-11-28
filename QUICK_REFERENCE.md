@@ -24,7 +24,7 @@
 - Browse all shared challenges
 - See language, difficulty, steps
 - One-click to play
-- Auto-updates when new challenges shared
+- Auto-updates when New P&Ls shared
 
 **How to Share:**
 1. Complete challenge
@@ -45,11 +45,11 @@
 
 **Toggle Button Rules:**
 - Shows: Main screen, challenge viewer
-- Hides: University, Theme Store, Modals
+- Hides: University, Environment, Modals
 
 ---
 
-### 🎨 Theme Store
+### 🎨 Environment
 
 **Fixed:** Themes now fill entire screen
 - No weird scrollable box
@@ -109,7 +109,7 @@ https://yoursite.com/?challenge=ch_1699644123_abc123
 - Mobile fullscreen
 - Toggle auto-hide
 - Tap to dismiss
-- Theme store fix
+- Environment fix
 
 ### 🔜 Future Ideas
 - Backend API for global sharing
@@ -195,7 +195,7 @@ http://localhost:3000
 - ✅ Challenge appears in store
 - ✅ Toggle hides in modals (mobile)
 - ✅ Sidebar closes on content tap (mobile)
-- ✅ Theme store fills screen
+- ✅ Environment fills screen
 
 ---
 

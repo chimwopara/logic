@@ -96,7 +96,7 @@ Lines accumulate month over month!
 ## 🏆 COMPETITIVE FEATURES
 
 ### Daily Challenges
-- New challenge every day at midnight
+- New P&L every day at midnight
 - Build streaks for bonuses:
   - 3 days → +50 lines
   - 7 days → +150 lines

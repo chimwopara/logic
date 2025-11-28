@@ -258,12 +258,12 @@ if (window.innerWidth <= 768) {
 
 ---
 
-## 4. Theme Store Containment Fix
+## 4. Environment Containment Fix
 
 ### Before (Problematic)
 ```html
 <div style="max-width: 1000px;">
-    <h2>Theme Store</h2>
+    <h2>Environment</h2>
     <div style="max-height: 60vh; overflow-y: auto;">
         <!-- Themes here - creates nested scrolling -->
     </div>
@@ -275,7 +275,7 @@ if (window.innerWidth <= 768) {
 ### After (Fixed)
 ```html
 <div style="width: 100%; height: 100%; overflow-y: auto; display: flex; flex-direction: column;">
-    <h2>Theme Store</h2>
+    <h2>Environment</h2>
     <div style="flex: 1;">
         <!-- Themes here - single scroll area -->
     </div>

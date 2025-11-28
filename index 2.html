@@ -44,152 +44,410 @@
         
         /* Protection Classes (Anti-Copy/Screenshot) */
         .protected-content {
-            user-select: none; -webkit-user-select: none; cursor: default; transition: filter 0.2s ease;
+            user-select: none; /* CSS Standard */
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE/Edge */
+            cursor: default;
+            transition: filter 0.2s ease;
         }
-        .privacy-blur { filter: blur(12px) grayscale(100%); opacity: 0.5; pointer-events: none; }
+
+        /* This class is toggled by JS when window loses focus */
+        .privacy-blur {
+            filter: blur(12px) grayscale(100%);
+            opacity: 0.5;
+            pointer-events: none;
+        }
         
         .container {
-            display: flex; height: 100vh; width: 100vw; padding: 12px; gap: 12px;
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            padding: 12px;
+            gap: 12px;
             background: linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-end)); 
             transition: background 0.5s ease;
         }
         
         /* Sidebar Styles */
         .sidebar {
-            width: 300px; background-color: var(--bg-glass);
-            backdrop-filter: blur(50px) saturate(180%); -webkit-backdrop-filter: blur(50px) saturate(180%);
-            border: 1px solid var(--border-glass); border-radius: 16px;
-            display: flex; flex-direction: column; flex-shrink: 0; user-select: none; z-index: 10;
+            width: 300px;
+            background-color: var(--bg-glass);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            user-select: none;
+            z-index: 10;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             transition: transform 0.5s var(--ease-spring), opacity 0.3s ease, width 0.5s var(--ease-spring), background-color 0.5s ease;
             margin-left: 0;
         }
-        .sidebar.hidden { transform: translateX(-110%); opacity: 0; pointer-events: none; width: 0; margin-left: -12px; }
+        
+        .sidebar.hidden {
+            transform: translateX(-110%);
+            opacity: 0;
+            pointer-events: none;
+            width: 0;
+            margin-left: -12px;
+        }
         
         .toggle-sidebar-btn {
-            position: fixed; top: 23px; left: 260px; width: 40px; height: 40px;
-            background: var(--bg-glass); backdrop-filter: blur(50px) saturate(180%);
-            border: 1px solid var(--border-glass); border-radius: 12px;
-            display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3); transition: all 0.5s var(--ease-spring);
+            position: fixed;
+            top: 23px;
+            left: 260px;
+            width: 40px;
+            height: 40px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 20;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            transition: all 0.5s var(--ease-spring);
         }
-        .toggle-sidebar-btn.collapsed { left: 24px; background: rgba(28, 28, 30, 0.5); box-shadow: none; }
-        .toggle-sidebar-btn:hover { background: var(--bg-glass-light); transform: scale(1.05); }
-        .toggle-sidebar-btn.collapsed:hover { transform: scale(1.05) translateX(2px); }
-        .toggle-sidebar-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); transition: transform 0.5s var(--ease-spring); }
+
+        .toggle-sidebar-btn.collapsed {
+            left: 24px;
+            background: rgba(28, 28, 30, 0.5);
+            box-shadow: none;
+        }
+        
+        .toggle-sidebar-btn:hover {
+            background: var(--bg-glass-light);
+            transform: scale(1.05);
+        }
+
+        .toggle-sidebar-btn.collapsed:hover {
+             transform: scale(1.05) translateX(2px);
+        }
+        
+        .toggle-sidebar-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-primary);
+            transition: transform 0.5s var(--ease-spring);
+        }
+
         .toggle-sidebar-btn.collapsed svg { transform: rotate(180deg); }
         
         .sidebar-header { padding: 16px 16px 12px 16px; }
         .logo { display: flex; align-items: center; gap: 12px; padding-left: 8px; margin-bottom: 12px; }
         .logo-img { height: 28px; width: auto; }
-        .logo-text { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em; color: var(--text-primary); }
+        .logo-text {
+            font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
 
         .sidebar-btn {
-            margin: 4px 12px; padding: 8px 12px; color: var(--text-primary); background: transparent;
-            border-radius: 10px; font-weight: 500; font-size: 0.9rem; cursor: pointer;
-            transition: all 0.2s var(--ease-spring); display: flex; align-items: center; gap: 10px;
+            margin: 4px 12px;
+            padding: 8px 12px;
+            color: var(--text-primary);
+            background: transparent;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s var(--ease-spring);
+            display: flex; align-items: center; gap: 10px;
             border: none; text-align: left;
         }
         .sidebar-btn:hover { background: var(--bg-glass-light); }
         .sidebar-btn:active { background: rgba(255,255,255,0.15); transform: scale(0.98); }
         .sidebar-btn svg { opacity: 0.8; width: 18px; height: 18px; }
 
-        .new-chat-btn { background: rgba(10, 132, 255, 0.15); color: var(--accent-primary); font-weight: 600; }
+        .new-chat-btn {
+            background: rgba(10, 132, 255, 0.15);
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
         .new-chat-btn:hover { background: rgba(10, 132, 255, 0.25) !important; }
         .new-chat-btn svg { opacity: 1; color: var(--accent-primary); }
         
-        .sidebar-section-title { font-size: 12px; font-weight: 600; color: var(--text-tertiary); padding: 20px 20px 8px 20px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .sidebar-section-title {
+            font-size: 12px; font-weight: 600; color: var(--text-tertiary);
+            padding: 20px 20px 8px 20px; text-transform: uppercase; letter-spacing: 0.05em;
+        }
+
         .history-container { flex: 1; overflow-y: auto; padding: 0 12px; }
         .history-container::-webkit-scrollbar { width: 0px; }
-        .history-item { padding: 8px 12px; border-radius: 8px; margin-bottom: 2px; cursor: pointer; transition: all 0.2s ease; color: var(--text-secondary); font-size: 0.85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        .history-item {
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-bottom: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
         .history-item:hover { background: var(--bg-glass-light); color: var(--text-primary); }
 
-        .sidebar-footer { padding: 16px; background: rgba(0,0,0,0.2); backdrop-filter: blur(20px); border-top: 1px solid var(--border-glass); border-radius: 0 0 16px 16px; display: flex; flex-direction: column; gap: 12px; }
-        .mini-stats { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-secondary); font-weight: 500; padding: 0 8px; }
+        .sidebar-footer {
+            padding: 16px;
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-glass);
+            border-radius: 0 0 16px 16px;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+
+        .mini-stats {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 12px; color: var(--text-secondary); font-weight: 500;
+            padding: 0 8px;
+        }
         .text-accent { color: var(--accent-primary); }
 
-        .google-signin-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background-color: rgba(255,255,255,0.1); color: #fff; border: 1px solid var(--border-glass); border-radius: 10px; padding: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+        .google-signin-btn {
+            width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
+            background-color: rgba(255,255,255,0.1);
+            color: #fff; border: 1px solid var(--border-glass);
+            border-radius: 10px; padding: 8px;
+            font-size: 13px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s ease;
+        }
         .google-signin-btn:hover { background-color: rgba(255,255,255,0.15); }
         
         /* Main Content */
-        .main-content { flex: 1; border-radius: 16px; background: transparent; backdrop-filter: none; border: none; display: flex; flex-direction: column; position: relative; overflow: hidden; box-shadow: none; transition: all 0.5s var(--ease-spring); }
+        .main-content {
+            flex: 1;
+            border-radius: 16px;
+            background: transparent;
+            backdrop-filter: none;
+            border: none;
+            display: flex; flex-direction: column;
+            position: relative; overflow: hidden;
+            box-shadow: none;
+            transition: all 0.5s var(--ease-spring);
+        }
+        
         .content-area { flex: 1; display: flex; overflow: hidden; position: relative; }
-        .creator-panel { flex: 1; max-width: 100%; margin: 0 auto; display: flex; flex-direction: column; transition: all 0.5s var(--ease-spring); }
-        .content-area.has-viewer .creator-panel { max-width: 45%; border-right: 1px solid var(--border-glass); }
+        
+        .creator-panel {
+            flex: 1; max-width: 100%; margin: 0 auto;
+            display: flex; flex-direction: column;
+            transition: all 0.5s var(--ease-spring);
+        }
+        .content-area.has-viewer .creator-panel {
+            max-width: 45%; border-right: 1px solid var(--border-glass);
+        }
 
-        .prompt-container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; }
-        .greeting { text-align: center; max-width: 600px; margin-bottom: 40px; animation: fadeIn 0.8s ease-out; }
-        .greeting h1 { font-weight: 700; font-size: 2.8rem; margin-bottom: 12px; color: var(--text-primary); letter-spacing: -0.02em; }
-        .greeting p { color: var(--text-secondary); font-size: 1.3rem; font-weight: 400; }
+        .prompt-container {
+            flex: 1; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; padding: 40px;
+        }
 
-        .input-area-wrapper { width: 100%; max-width: 720px; margin: 0 auto 32px auto; padding: 0 24px; position: relative; z-index: 2; }
-        .input-container { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(60px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 16px 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
-        .input-container:focus-within { border-color: rgba(10, 132, 255, 0.4); background: rgba(255, 255, 255, 0.08); box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
-        textarea#questionInput { width: 100%; min-height: 48px; max-height: 200px; background: transparent; border: none; color: var(--text-primary); font-family: inherit; font-size: 1rem; line-height: 1.4; resize: none; outline: none; }
+        .greeting {
+            text-align: center; max-width: 600px; margin-bottom: 40px;
+            animation: fadeIn 0.8s ease-out;
+        }
+        .greeting h1 {
+            font-weight: 700; font-size: 2.8rem; margin-bottom: 12px;
+            color: var(--text-primary); letter-spacing: -0.02em;
+        }
+        .greeting p {
+            color: var(--text-secondary); font-size: 1.3rem; font-weight: 400;
+        }
+
+        .input-area-wrapper {
+            width: 100%; max-width: 720px; margin: 0 auto 32px auto;
+            padding: 0 24px; position: relative; z-index: 2;
+        }
+
+        .input-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(60px) saturate(180%);
+            -webkit-backdrop-filter: blur(60px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 16px 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        .input-container:focus-within {
+            border-color: rgba(10, 132, 255, 0.4);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        textarea#questionInput {
+            width: 100%; min-height: 48px; max-height: 200px;
+            background: transparent; border: none;
+            color: var(--text-primary); font-family: inherit;
+            font-size: 1rem; line-height: 1.4;
+            resize: none; outline: none;
+        }
         textarea#questionInput::placeholder { color: var(--text-tertiary); }
 
-        .input-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 0; }
+        .input-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 12px; padding-top: 0;
+        }
+
         .input-tools { display: flex; gap: 8px; align-items: center; }
-        .minimal-btn { background-color: rgba(255,255,255,0.08); color: var(--text-secondary); border: none; padding: 6px 12px; border-radius: 18px; font-size: 0.85rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
+
+        .minimal-btn {
+            background-color: rgba(255,255,255,0.08);
+            color: var(--text-secondary); border: none;
+            padding: 6px 12px; border-radius: 18px;
+            font-size: 0.85rem; font-weight: 500;
+            cursor: pointer; display: flex; align-items: center; gap: 6px;
+            transition: all 0.2s ease;
+        }
         .minimal-btn:hover { background-color: rgba(255,255,255,0.15); color: #fff; }
         .minimal-btn.active-lang { background-color: var(--accent-primary); color: #fff; }
+
         #languageSelect { display: none; }
-        .minimal-select { background-color: rgba(255,255,255,0.08); color: var(--text-secondary); border: 1px solid transparent; padding: 6px 12px; border-radius: 18px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease; outline: none; }
+        
+        .minimal-select {
+            background-color: rgba(255,255,255,0.08);
+            color: var(--text-secondary);
+            border: 1px solid transparent;
+            padding: 6px 12px;
+            border-radius: 18px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+        }
         .minimal-select:hover { background-color: rgba(255,255,255,0.15); color: #fff; }
         .minimal-select:focus { background-color: rgba(255,255,255,0.12); border-color: rgba(10, 132, 255, 0.3); color: #fff; }
         .minimal-select option[disabled] { color: var(--text-tertiary); }
 
-        .send-btn { width: 32px; height: 32px; background: var(--accent-primary); color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s var(--ease-spring); }
+        .send-btn {
+            width: 32px; height: 32px;
+            background: var(--accent-primary);
+            color: white; border: none; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s var(--ease-spring);
+        }
         .send-btn svg { width: 16px; height: 16px; stroke-width: 3px; }
         .send-btn:hover { transform: scale(1.1); background: var(--accent-highlight); }
         .send-btn:active { transform: scale(0.95); }
         .send-btn:disabled { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.2); transform: none; cursor: default; }
 
         /* Modal Styles */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px); align-items: center; justify-content: center; z-index: 1000; opacity: 0; transition: opacity 0.2s ease; }
+        .modal {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px);
+            align-items: center; justify-content: center; z-index: 1000;
+            opacity: 0; transition: opacity 0.2s ease;
+        }
         .modal.active { display: flex; opacity: 1; }
-        .modal-content, .language-modal-content { background: rgba(44, 44, 46, 0.9); backdrop-filter: blur(40px) saturate(180%); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); border-radius: 20px; overflow: hidden; transform: scale(0.95); opacity: 0; transition: all 0.3s var(--ease-spring); }
+        
+        .modal-content, .language-modal-content {
+            background: rgba(44, 44, 46, 0.9);
+            backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border-radius: 20px; overflow: hidden;
+            transform: scale(0.95); opacity: 0; transition: all 0.3s var(--ease-spring);
+        }
         .modal.active .modal-content, .modal.active .language-modal-content { transform: scale(1); opacity: 1; }
+        
         .language-modal-content { max-width: 900px; width: 90%; max-height: 80vh; display: flex; flex-direction: column; }
-        .language-search-bar { width: 100%; padding: 10px 16px 10px 34px; background: rgba(118, 118, 128, 0.24); border: none; border-radius: 10px; color: var(--text-primary); font-size: 0.95rem; margin-top: 12px; outline: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(235,235,245,0.5)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 10px center; }
+
+        .language-search-bar {
+            width: 100%; padding: 10px 16px 10px 34px;
+            background: rgba(118, 118, 128, 0.24); border: none; border-radius: 10px;
+            color: var(--text-primary); font-size: 0.95rem; margin-top: 12px; outline: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(235,235,245,0.5)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: 10px center;
+        }
         .language-search-bar:focus { background-color: rgba(118, 118, 128, 0.35); }
+
         .language-grid-container { flex: 1; overflow-y: auto; padding: 20px; }
         .language-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
         @media (max-width: 800px) { .language-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 600px) { .language-grid { grid-template-columns: repeat(2, 1fr); } }
-        .language-card { background: rgba(255,255,255,0.05); border-radius: 14px; padding: 12px; cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+
+        .language-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 14px; padding: 12px;
+            cursor: pointer; transition: all 0.2s ease;
+            display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;
+        }
         .language-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
         .language-card.selected { background: rgba(10, 132, 255, 0.2); }
-        .lang-icon { width: 48px; height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--text-secondary); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+
+        .lang-icon {
+            width: 48px; height: 48px;
+            flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+            font-size: 24px; color: var(--text-secondary);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
         .lang-icon img { width: 100%; height: 100%; object-fit: contain; }
         .lang-info { width: 100%; }
         .lang-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; color: var(--text-primary); }
         .lang-desc { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.3; }
         .special-card { background: linear-gradient(135deg, rgba(10, 132, 255, 0.15), rgba(94, 92, 230, 0.15)); }
 
-        .challenge-viewer { flex: 1; background: rgba(0,0,0,0.5); display: none; flex-direction: column; border-left: 1px solid var(--border-glass); backdrop-filter: blur(40px); }
+        .challenge-viewer {
+            flex: 1; background: rgba(0,0,0,0.5);
+            display: none; flex-direction: column;
+            border-left: 1px solid var(--border-glass); backdrop-filter: blur(40px);
+        }
         .challenge-viewer.active, .content-area.has-viewer .challenge-viewer { display: flex !important; }
-        .viewer-header { height: 50px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-glass); background: rgba(255,255,255,0.03); }
+
+        .viewer-header {
+            height: 50px; padding: 0 16px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid var(--border-glass); background: rgba(255,255,255,0.03);
+        }
         .viewer-title { font-weight: 600; font-size: 0.9rem; color: var(--text-primary); opacity: 0.8; }
-        .tool-btn { background: var(--bg-glass-light); border: none; color: var(--text-secondary); cursor: pointer; padding: 6px; border-radius: 8px; transition: all 0.2s ease; }
+        .tool-btn {
+            background: var(--bg-glass-light); border: none; color: var(--text-secondary);
+            cursor: pointer; padding: 6px; border-radius: 8px; transition: all 0.2s ease;
+        }
         .tool-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
-        .iframe-wrap { flex: 1; background: #fff; border-radius: 12px; margin: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+        .iframe-wrap {
+            flex: 1; background: #fff; border-radius: 12px; margin: 12px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
 
         .hidden { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
-        .status-area { position: fixed; top: 24px; right: 24px; z-index: 2000; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; width: auto; pointer-events: none; }
+        /* Status Area */
+        .status-area {
+            position: fixed; top: 24px; right: 24px; z-index: 2000;
+            display: flex; flex-direction: column; gap: 12px; align-items: flex-end;
+            width: auto; pointer-events: none;
+        }
         .loading-indicator { display: none; align-items: center; gap: 10px; color: var(--text-secondary); font-weight: 500; }
         .loading-indicator.active { display: flex; }
         .spinner { width: 20px; height: 20px; border: 2.5px solid rgba(255,255,255,0.2); border-top-color: var(--accent-primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .error-message, .success-message { padding: 12px 40px 12px 18px; border-radius: 12px; font-size: 0.9rem; font-weight: 500; display: none; backdrop-filter: blur(10px); position: relative; box-shadow: 0 8px 24px rgba(0,0,0,0.3); border: 1px solid var(--border-glass); pointer-events: auto; max-width: 350px; align-items: center; }
+        .error-message, .success-message { 
+            padding: 12px 40px 12px 18px; border-radius: 12px; font-size: 0.9rem; font-weight: 500; 
+            display: none; backdrop-filter: blur(10px); position: relative;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3); border: 1px solid var(--border-glass);
+            pointer-events: auto; max-width: 350px; align-items: center;
+        }
         .error-message.active, .success-message.active { display: flex; align-items: center; animation: slideUp 0.3s ease; }
         .error-message { background: rgba(255, 69, 58, 0.2); color: #ff7b7b; }
         .success-message { background: rgba(48, 209, 88, 0.2); color: #6bff87; }
         .alert-text { word-break: break-word; }
-        .alert-close-btn { position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #ffffff; border: none; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer; font-size: 18px; font-weight: 700; line-height: 1; transition: all 0.2s ease; flex-shrink: 0; z-index: 10; }
+        .alert-close-btn {
+            position: absolute; top: 50%; right: 10px; transform: translateY(-50%);
+            background: rgba(0,0,0,0.6); color: #ffffff; border: none; border-radius: 50%;
+            width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+            padding: 0; cursor: pointer; font-size: 18px; font-weight: 700; line-height: 1;
+            transition: all 0.2s ease; flex-shrink: 0; z-index: 10;
+        }
         .alert-close-btn:hover { background: rgba(0,0,0,0.8); transform: translateY(-50%) scale(1.1); }
 
         /* Theme Grid */
@@ -197,11 +455,21 @@
         @media (max-width: 1000px) { .theme-grid { grid-template-columns: repeat(6, 1fr); } }
         @media (max-width: 700px) { .theme-grid { grid-template-columns: repeat(4, 1fr); } }
         @media (max-width: 500px) { .theme-grid { grid-template-columns: repeat(3, 1fr); } }
+
         .theme-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease; }
         .theme-wrapper:hover { transform: translateY(-4px); }
-        .theme-option { width: 100%; aspect-ratio: 1; border-radius: 16px; border: 2px solid rgba(255,255,255,0.1); transition: all 0.2s ease; position: relative; overflow: hidden; }
+
+        .theme-option {
+             width: 100%; aspect-ratio: 1; border-radius: 16px;
+             border: 2px solid rgba(255,255,255,0.1); transition: all 0.2s ease;
+             position: relative; overflow: hidden;
+        }
         .theme-wrapper:hover .theme-option { border-color: var(--accent-primary); }
-        .theme-option.locked::after { content: '?'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); font-size: 1.8rem; backdrop-filter: blur(4px); text-shadow: 0 2px 10px rgba(0,0,0,0.5); font-weight: 700; }
+        .theme-option.locked::after {
+             content: '?'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+             background: rgba(0,0,0,0.6); font-size: 1.8rem; backdrop-filter: blur(4px);
+             text-shadow: 0 2px 10px rgba(0,0,0,0.5); font-weight: 700;
+        }
         .theme-name { font-size: 0.75rem; color: var(--text-secondary); text-align: center; font-weight: 500; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .theme-wrapper:hover .theme-name { color: var(--text-primary); }
         
@@ -209,103 +477,87 @@
         #downgradeOption { display: none; margin-top: 24px; cursor: pointer; color: var(--text-tertiary); font-size: 0.9rem; text-decoration: underline; text-underline-offset: 4px; }
         #downgradeOption:hover { color: var(--error); }
 
-        /* University Portal Styles */
-        .university-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; width: 100%; margin-bottom: 32px; }
-        .faculty-card { background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); border-radius: 20px; padding: 24px; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden; }
+        /* University Portal Styles (New) */
+        .university-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;
+            width: 100%; margin-bottom: 32px;
+        }
+        .faculty-card {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass);
+            border-radius: 20px; padding: 24px; cursor: pointer; transition: all 0.3s ease;
+            display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden;
+        }
         .faculty-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-4px); border-color: var(--accent-primary); }
         .faculty-card.selected { background: rgba(10, 132, 255, 0.15); border-color: var(--accent-primary); box-shadow: 0 0 0 2px var(--accent-primary); }
+        
+        /* Flex container for the top part of the card */
         .faculty-header { display: flex; gap: 16px; align-items: flex-start; }
+        
         .faculty-icon { width: 56px; height: 56px; border-radius: 12px; flex-shrink: 0; object-fit: cover; }
         .faculty-info { flex: 1; }
         .faculty-title { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
         .faculty-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.4; }
-        .syllabus-box { margin-top: 16px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 16px; font-size: 0.85rem; color: var(--text-secondary); max-height: 200px; overflow-y: auto; }
-        .syllabus-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-tertiary); margin-bottom: 8px; font-weight: 700; }
-        .syllabus-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
-        .syllabus-item { display: flex; gap: 8px; align-items: baseline; line-height: 1.4; }
-        .syllabus-item::before { content: "•"; color: var(--accent-primary); }
+        
+        /* Syllabus Box Styling */
+        .syllabus-box {
+            margin-top: 16px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            /* Scroll for long syllabus */
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .syllabus-title { 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        
+        .syllabus-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .syllabus-item {
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            line-height: 1.4;
+        }
+        
+        .syllabus-item::before {
+            content: "•";
+            color: var(--accent-primary);
+        }
+
         .program-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 12px; }
         .program-tag { font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 12px; color: var(--text-secondary); }
-        .admission-form { background: rgba(0,0,0,0.3); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 16px; width: 100%; }
+        
+        .admission-form {
+            background: rgba(0,0,0,0.3); border-radius: 20px; padding: 24px;
+            display: flex; flex-direction: column; gap: 16px; width: 100%;
+        }
         .form-group { display: flex; flex-direction: column; gap: 8px; text-align: left; }
         .form-label { font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); }
-        .form-input { background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); border-radius: 12px; padding: 12px; color: white; font-size: 1rem; outline: none; transition: border-color 0.2s; }
+        .form-input {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass);
+            border-radius: 12px; padding: 12px; color: white; font-size: 1rem; outline: none;
+            transition: border-color 0.2s;
+        }
         .form-input:focus { border-color: var(--accent-primary); background: rgba(255,255,255,0.08); }
         .form-textarea { min-height: 100px; resize: vertical; font-family: inherit; }
-
-        /* Payment Modal */
-        .payment-modal-content { max-width: 500px; }
-        .card-preview { background: linear-gradient(135deg, #0A84FF, #5E5CE6); border-radius: 16px; padding: 24px; color: white; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; overflow: hidden; height: 200px; display: flex; flex-direction: column; justify-content: space-between; }
-        .card-preview::before { content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%; }
-        .card-preview::after { content: ''; position: absolute; bottom: -30px; left: -30px; width: 120px; height: 120px; background: rgba(255,255,255,0.1); border-radius: 50%; }
-        .chip { width: 40px; height: 28px; background: linear-gradient(135deg, #ffd700, #b8860b); border-radius: 4px; margin-bottom: 20px; }
-        .card-number-display { font-family: 'JetBrains Mono', monospace; font-size: 1.4rem; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .card-details-display { display: flex; justify-content: space-between; margin-top: 20px; }
-        .detail-label { font-size: 0.7rem; opacity: 0.8; text-transform: uppercase; margin-bottom: 4px; }
-        .detail-value { font-family: 'JetBrains Mono', monospace; font-size: 1rem; }
-
-        /* Student Portal Dashboard */
-        .student-portal { position: fixed; inset: 0; background: var(--bg-app); z-index: 5000; display: none; flex-direction: column; padding: 24px; overflow: hidden; }
-        .student-portal.active { display: flex; }
-        .portal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border-glass); }
-        .portal-title { font-size: 2rem; font-weight: 800; color: var(--text-primary); }
-        .portal-subtitle { color: var(--accent-primary); font-weight: 600; font-size: 1.1rem; }
-        
-        .portal-body { flex: 1; display: flex; gap: 24px; overflow: hidden; }
-        .weeks-sidebar { width: 280px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; padding-right: 12px; }
-        .weeks-sidebar::-webkit-scrollbar { width: 4px; }
-        .weeks-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
-        
-        .week-card { background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: space-between; align-items: center; }
-        .week-card:hover { background: rgba(255,255,255,0.1); }
-        .week-card.active { background: var(--accent-primary); border-color: var(--accent-primary); }
-        .week-card.locked { opacity: 0.5; cursor: not-allowed; }
-        .week-card.locked:hover { background: rgba(255,255,255,0.05); }
-        
-        .week-info { display: flex; flex-direction: column; gap: 2px; }
-        .week-num { font-weight: 700; font-size: 1rem; }
-        .week-status { font-size: 0.75rem; opacity: 0.8; }
-        
-        .week-content-view { flex: 1; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid var(--border-glass); padding: 32px; display: flex; flex-direction: column; overflow-y: auto; }
-        
-        .portal-hero {
-            background: black;
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 32px;
-            aspect-ratio: 16/9;
-            max-height: 400px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            border: 1px solid var(--border-glass);
-        }
-        
-        .portal-hero iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .content-header { margin-bottom: 32px; }
-        .content-title { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
-        .content-desc { color: var(--text-secondary); font-size: 1.1rem; }
-        
-        .resource-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
-        .resource-card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; cursor: pointer; transition: all 0.3s ease; aspect-ratio: 1; border: 1px solid transparent; position: relative; }
-        .resource-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.1); border-color: var(--accent-primary); }
-        .resource-card.locked { opacity: 0.6; cursor: not-allowed; filter: grayscale(1); }
-        .resource-card.locked:hover { transform: none; background: rgba(255,255,255,0.05); border-color: transparent; }
-        
-        .lock-icon { position: absolute; top: 12px; right: 12px; color: var(--text-tertiary); }
-        
-        .res-icon { width: 64px; height: 64px; color: var(--accent-primary); }
-        .res-title { font-weight: 600; font-size: 1.1rem; }
-        
-        /* Progress Bar */
-        .progress-container { width: 200px; background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; overflow: hidden; margin-top: 8px; }
-        .progress-fill { height: 100%; background: var(--success); transition: width 0.5s ease; border-radius: 4px; }
-        
-        .close-portal { position: fixed; top: 24px; right: 24px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-glass); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 5001; transition: all 0.2s ease; }
-        .close-portal:hover { background: var(--error); transform: scale(1.1); }
 
         /* Mobile Friendliness */
         @media (max-width: 768px) {
@@ -325,7 +577,7 @@
             .content-area.has-viewer { display: block; }
             .content-area.has-viewer .creator-panel { display: none; }
             .content-area.has-viewer .challenge-viewer { max-width: 100%; border-left: none; position: absolute; inset: 0; height: 100%; }
-            .modal-content, .language-modal-content, #storeModal > div, #themeStoreModal > div, #premiumModal > div, #universityModal > div, .payment-modal-content {
+            .modal-content, .language-modal-content, #storeModal > div, #themeStoreModal > div, #premiumModal > div, #universityModal > div {
                 width: 95% !important; max-width: 95% !important; padding: 24px !important; max-height: 90vh; overflow-y: auto; -webkit-overflow-scrolling: touch;
             }
             .modal-title-text, h2[style*="font-size: 2.5rem"], h3[style*="font-size: 2.5rem"] { font-size: 1.8rem !important; margin-bottom: 24px !important; }
@@ -338,10 +590,6 @@
             .container { height: 100vh; height: -webkit-fill-available; }
             body.modal-active .toggle-sidebar-btn { display: none; }
             .sidebar.hidden ~ .main-content { margin-left: 0; }
-            
-            .portal-body { flex-direction: column; }
-            .weeks-sidebar { width: 100%; height: 150px; flex-direction: row; overflow-x: auto; overflow-y: hidden; }
-            .week-card { min-width: 160px; }
         }
         
         .toggle-sidebar-btn.hide-on-modal { display: none !important; }
@@ -381,7 +629,7 @@
                 Community
             </button>
             
-            <button class="sidebar-btn" onclick="checkEnrollmentAndOpen()">
+            <button class="sidebar-btn" onclick="showUniversityModal()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
                 University
             </button>
@@ -422,12 +670,14 @@
                     <div class="input-area-wrapper">
                         <div class="input-container">
                             <textarea id="questionInput" placeholder="Describe your coding challenge..."></textarea>
+                            
                             <div class="input-footer">
                                 <div class="input-tools">
                                     <button id="languageTrigger" class="minimal-btn" onclick="openLanguageModal()">
                                         <span id="currentLanguageLabel">Language...</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                                     </button>
+
                                     <select id="languageSelect" style="display: none;">
                                         <option value="" disabled selected>Language</option>
                                         <option value="javascript">JavaScript</option>
@@ -435,20 +685,27 @@
                                         <option value="c">C</option>
                                         <option value="custom">custom</option>
                                     </select>
+                                    
                                     <select id="difficultySelect" class="minimal-select" onchange="checkSelections()">
                                         <option value="" disabled selected>Difficulty...</option>
                                         <option value="beginner">Beginner</option>
                                         <option value="intermediate">Intermediate</option>
                                         <option value="advanced">Advanced</option>
                                     </select>
+                                    
                                     <input id="customLanguageInput" class="minimal-select hidden" style="border: 1px solid var(--accent-primary); cursor: text; min-width: 120px;" placeholder="e.g. Assembly..." oninput="checkSelections()">
                                 </div>
+                                
                                 <button class="send-btn" onclick="generateChallenge()" id="generateBtn" title="Generate" disabled>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="19" x2="12" y2="5"></line>
+                                        <polyline points="5 12 12 5 19 12"></polyline>
+                                    </svg>
                                 </button>
                             </div>
                         </div>
-                    </div>
+                        
+                        </div>
                 </div>
                 
                 <div class="challenge-viewer" id="challengeViewer">
@@ -481,76 +738,6 @@
         </div>
     </div>
 
-    <!-- Student Portal Dashboard -->
-    <div id="studentPortal" class="student-portal">
-        <button class="close-portal" onclick="closeStudentPortal()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-        <div class="portal-header">
-            <div>
-                <div class="portal-title">University Portal</div>
-                <div class="portal-subtitle" id="enrolledFacultyName">Enrolled: Faculty of Media</div>
-            </div>
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 4px;">Progress</div>
-                <div class="progress-container">
-                    <div class="progress-fill" id="portalProgressBar" style="width: 2%;"></div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="portal-body">
-            <!-- Left Sidebar: Weeks -->
-            <div class="weeks-sidebar" id="weeksSidebar">
-                <!-- Generated by JS -->
-            </div>
-            
-            <!-- Right Content: Resources -->
-            <div class="week-content-view">
-                
-                <!-- Hero Video Section -->
-                <div class="portal-hero">
-                    <iframe id="heroVideoFrame" src="https://www.youtube.com/embed/1KFPknAH0do?controls=0&rel=0" title="Weekly Intro" allowfullscreen></iframe>
-                </div>
-
-                <div class="content-header">
-                    <div class="content-title" id="viewWeekTitle">Week 1</div>
-                    <div class="content-desc" id="viewWeekDesc">Introduction to the curriculum and setup.</div>
-                </div>
-                
-                <div class="resource-grid">
-                    <!-- Video Lecture -->
-                    <div class="resource-card" onclick="alert('Opening Video Lecture...')">
-                        <svg class="res-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
-                        <div class="res-title">Video Lecture</div>
-                    </div>
-                    
-                    <!-- Notes -->
-                    <div class="resource-card" id="notesCard" onclick="openClassNotes()">
-                        <svg class="res-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                        <div class="res-title">Class Notes</div>
-                    </div>
-                    
-                    <!-- P&L Challenge (Locked till Wednesday) -->
-                    <div class="resource-card" id="pnlCard" onclick="openPnLChallenge()">
-                        <svg class="lock-icon" id="pnlLock" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        <svg class="res-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                        <div class="res-title">P&L Challenge</div>
-                        <div style="font-size: 0.7rem; color: var(--text-tertiary); margin-top: -8px;">Opens Wednesday</div>
-                    </div>
-                    
-                    <!-- Weekly Project (Locked except Fridays) -->
-                    <div class="resource-card" id="projectCard" onclick="openWeeklyProject()">
-                        <svg class="lock-icon" id="projectLock" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        <svg class="res-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-                        <div class="res-title">Weekly Project</div>
-                        <div style="font-size: 0.7rem; color: var(--text-tertiary); margin-top: -8px;">Fridays Only (24h)</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Modals -->
     <div class="modal" id="languageModal" onclick="if(event.target === this) closeLanguageModal()">
         <div class="language-modal-content" style="background: transparent; backdrop-filter: none; border: none; box-shadow: none; padding: 32px; max-height: 90vh;">
@@ -568,60 +755,61 @@
     <div class="modal" id="storeModal" onclick="if(event.target === this) closeStoreModal()">
         <div style="text-align: center; padding: 40px 40px 80px; width: 90%; max-width: 1400px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; margin: auto;">
              <h2 style="font-size: 2.5rem; margin-bottom: 32px; font-weight: 800; color: var(--text-primary); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Community</h2>
-             <div id="challengeStoreGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 10px; flex: 1;"></div>
-             <p id="noSharedChallenges" style="color: var(--text-secondary); font-size: 1.1rem; margin-top: 40px; display: none;">No shared challenges yet. Complete a challenge and share it with the community!</p>
+             
+             <div id="challengeStoreGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 10px; flex: 1;">
+                 <!-- Generated by JS -->
+             </div>
+             
+             <p id="noSharedChallenges" style="color: var(--text-secondary); font-size: 1.1rem; margin-top: 40px; display: none;">
+                 No shared challenges yet. Complete a challenge and share it with the community!
+             </p>
         </div>
     </div>
 
-    <!-- University Modal (Selection & Admission) -->
+    <!-- University Modal -->
     <div class="modal" id="universityModal" onclick="if(event.target === this) closeUniversityModal()">
         <div style="text-align: center; padding: 40px; width: 90%; max-width: 1000px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; margin: auto;">
              <h2 style="font-size: 2.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">University of Prompts & Logic</h2>
              <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 32px;">Select a faculty to view its curriculum and submit your admission application.</p>
-             <div class="university-grid" id="facultyGrid"></div>
+             
+             <!-- Faculty Selection Grid -->
+             <div class="university-grid" id="facultyGrid">
+                 <!-- Generated by JS -->
+             </div>
+
+             <!-- Admission Form -->
              <form class="admission-form" id="admissionForm" onsubmit="handleAdmissionSubmit(event)">
                  <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); text-align: left;">Admission Application</h3>
                  <p style="color: var(--text-tertiary); font-size: 0.9rem; text-align: left; margin-bottom: 16px;">Applying for: <strong id="selectedFacultyName" style="color: var(--accent-primary);">None selected</strong></p>
-                 <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" required placeholder="John Doe"></div>
-                 <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" required placeholder="john@example.com"></div>
-                 <div class="form-group"><label class="form-label">Create Password</label><input type="password" class="form-input" required placeholder="••••••••"></div>
-                 <div class="form-group"><label class="form-label">Highest Education Level</label><select class="form-input minimal-select" style="text-align: left; width: 100%; border: 1px solid var(--border-glass);"><option>High School</option><option>Undergraduate</option><option>Postgraduate</option><option>Self-Taught</option></select></div>
-                 <div class="form-group"><label class="form-label">Portfolio / Github Link (Optional)</label><input type="url" class="form-input" placeholder="https://..."></div>
-                 <div class="form-group"><label class="form-label">Statement of Purpose</label><textarea class="form-input form-textarea" required placeholder="Why do you want to join this faculty? How will you use AI?"></textarea></div>
-                 <button type="submit" class="minimal-btn" style="background: var(--accent-primary); color: white; justify-content: center; padding: 14px; font-size: 1rem; margin-top: 16px;">Proceed to Payment</button>
+                 
+                 <div class="form-group">
+                     <label class="form-label">Full Name</label>
+                     <input type="text" class="form-input" required placeholder="John Doe">
+                 </div>
+                 <div class="form-group">
+                     <label class="form-label">Email Address</label>
+                     <input type="email" class="form-input" required placeholder="john@example.com">
+                 </div>
+                 <div class="form-group">
+                     <label class="form-label">Highest Education Level</label>
+                     <select class="form-input minimal-select" style="text-align: left; width: 100%; border: 1px solid var(--border-glass);">
+                         <option>High School</option>
+                         <option>Undergraduate</option>
+                         <option>Postgraduate</option>
+                         <option>Self-Taught</option>
+                     </select>
+                 </div>
+                 <div class="form-group">
+                     <label class="form-label">Portfolio / Github Link (Optional)</label>
+                     <input type="url" class="form-input" placeholder="https://...">
+                 </div>
+                 <div class="form-group">
+                     <label class="form-label">Statement of Purpose</label>
+                     <textarea class="form-input form-textarea" required placeholder="Why do you want to join this faculty? How will you use AI?"></textarea>
+                 </div>
+                 
+                 <button type="submit" class="minimal-btn" style="background: var(--accent-primary); color: white; justify-content: center; padding: 14px; font-size: 1rem; margin-top: 16px;">Submit Application</button>
              </form>
-        </div>
-    </div>
-
-    <!-- Payment Modal -->
-    <div class="modal" id="paymentModal" onclick="if(event.target === this) closePaymentModal()">
-        <div class="modal-content payment-modal-content" style="padding: 32px;">
-            <h3 style="font-size: 1.8rem; margin-bottom: 24px; font-weight: 700; text-align: center;">Secure Checkout</h3>
-            
-            <div class="card-preview">
-                <div class="chip"></div>
-                <div class="card-number-display">•••• •••• •••• 4242</div>
-                <div class="card-details-display">
-                    <div><div class="detail-label">Card Holder</div><div class="detail-value">John Doe</div></div>
-                    <div><div class="detail-label">Expires</div><div class="detail-value">12/28</div></div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Card Number</label>
-                <input type="text" class="form-input" placeholder="0000 0000 0000 0000">
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
-                <div class="form-group"><label class="form-label">Expiry</label><input type="text" class="form-input" placeholder="MM/YY"></div>
-                <div class="form-group"><label class="form-label">CVC</label><input type="text" class="form-input" placeholder="123"></div>
-            </div>
-            
-            <div style="display: flex; justify-content: space-between; align-items: center; margin: 24px 0 16px 0; border-top: 1px solid var(--border-glass); padding-top: 16px;">
-                <span style="color: var(--text-secondary);">Total Admission Fee</span>
-                <span style="font-size: 1.5rem; font-weight: 700;">$499.00</span>
-            </div>
-
-            <button onclick="processPayment()" class="minimal-btn" style="width: 100%; background: #30D158; color: white; justify-content: center; padding: 14px; font-size: 1.1rem; font-weight: 600;">Pay Now</button>
         </div>
     </div>
 
@@ -754,11 +942,8 @@
         let currentPlan = null;
         let linesRemaining = 250;
         let selectedFaculty = null;
-        
-        // Enrollment State
-        let isEnrolled = localStorage.getItem('isEnrolled') === 'true';
-        let enrolledFaculty = localStorage.getItem('enrolledFaculty') || null;
-        let currentWeek = 1; // Locked to week 1 for now
+
+        // NOTE: schoolData is now loaded from syllabus.js
 
         function updatelinesDisplay() {
             document.getElementById('linesCount').textContent = linesRemaining.toLocaleString();
@@ -927,7 +1112,11 @@
             const grid = document.getElementById('facultyGrid');
             grid.innerHTML = '';
             
-            if (typeof schoolData === 'undefined') { console.error('Syllabus data not loaded!'); return; }
+            // schoolData comes from syllabus.js
+            if (typeof schoolData === 'undefined') {
+                console.error('Syllabus data not loaded!');
+                return;
+            }
 
             Object.keys(schoolData).forEach(key => {
                 const school = schoolData[key];
@@ -936,7 +1125,9 @@
                 if (selectedFaculty === key) card.classList.add('selected');
                 
                 card.onclick = (e) => {
+                    // Prevent card selection if clicking inside protected syllabus area
                     if (e.target.closest('.syllabus-box')) return;
+                    
                     document.querySelectorAll('.faculty-card').forEach(c => c.classList.remove('selected'));
                     card.classList.add('selected');
                     selectedFaculty = key;
@@ -955,20 +1146,18 @@
                             <div class="faculty-desc">${school.description}</div>
                         </div>
                     </div>
-                    <div class="syllabus-box protected-content" oncopy="return false" oncontextmenu="return false"><div class="syllabus-title">Curriculum</div><ul class="syllabus-list">${syllabusHtml}</ul></div>
+                    
+                    <div class="syllabus-box protected-content" oncopy="return false" oncontextmenu="return false">
+                        <div class="syllabus-title">Curriculum</div>
+                        <ul class="syllabus-list">
+                            ${syllabusHtml}
+                        </ul>
+                    </div>
+                    
                     <div class="program-tags">${tagsHtml}</div>
                 `;
                 grid.appendChild(card);
             });
-        }
-
-        // New Admission & Portal Logic
-        function checkEnrollmentAndOpen() {
-            if (isEnrolled && enrolledFaculty) {
-                openStudentPortal();
-            } else {
-                showUniversityModal();
-            }
         }
 
         function handleAdmissionSubmit(e) {
@@ -977,164 +1166,11 @@
                 showAlert('Please select a faculty first.', true);
                 return;
             }
+            // Mock submission
             closeUniversityModal();
-            // Open Payment Modal
-            document.getElementById('paymentModal').classList.add('active');
-            updateToggleButtonVisibility();
-        }
-
-        function closePaymentModal() {
-            document.getElementById('paymentModal').classList.remove('active');
-            updateToggleButtonVisibility();
-        }
-
-        function processPayment() {
-            // Mock Processing
-            const btn = document.querySelector('#paymentModal button');
-            const originalText = btn.textContent;
-            btn.textContent = "Processing...";
-            btn.disabled = true;
-
-            setTimeout(() => {
-                closePaymentModal();
-                btn.textContent = originalText;
-                btn.disabled = false;
-                
-                // Enrollment Success
-                isEnrolled = true;
-                enrolledFaculty = selectedFaculty;
-                localStorage.setItem('isEnrolled', 'true');
-                localStorage.setItem('enrolledFaculty', enrolledFaculty);
-                
-                showAlert('Payment successful! Welcome to the University.', false, 5000);
-                openStudentPortal();
-            }, 1500);
-        }
-
-        function openStudentPortal() {
-            const portal = document.getElementById('studentPortal');
-            portal.classList.add('active');
-            
-            // Set Faculty Name
-            const facultyName = schoolData[enrolledFaculty]?.title || "University";
-            document.getElementById('enrolledFacultyName').textContent = `Enrolled: ${facultyName}`;
-            
-            renderWeeks();
-            loadWeekContent(currentWeek);
-        }
-
-        function closeStudentPortal() {
-            document.getElementById('studentPortal').classList.remove('active');
-        }
-
-        function renderWeeks() {
-            const sidebar = document.getElementById('weeksSidebar');
-            sidebar.innerHTML = '';
-            
-            for (let i = 1; i <= 52; i++) {
-                const isLocked = i > currentWeek;
-                const div = document.createElement('div');
-                div.className = `week-card ${i === currentWeek ? 'active' : ''} ${isLocked ? 'locked' : ''}`;
-                
-                let icon = isLocked ? 
-                    `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>` : 
-                    `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-                
-                if (i === currentWeek) {
-                    icon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
-                }
-
-                div.innerHTML = `
-                    <div class="week-info">
-                        <div class="week-num">Week ${i}</div>
-                        <div class="week-status">${isLocked ? 'Locked' : (i === currentWeek ? 'In Progress' : 'Completed')}</div>
-                    </div>
-                    ${icon}
-                `;
-                
-                if (!isLocked) {
-                    div.onclick = () => {
-                        document.querySelectorAll('.week-card').forEach(c => c.classList.remove('active'));
-                        div.classList.add('active');
-                        loadWeekContent(i);
-                    };
-                }
-                
-                sidebar.appendChild(div);
-            }
-        }
-
-        function loadWeekContent(weekNum) {
-            document.getElementById('viewWeekTitle').textContent = `Week ${weekNum}`;
-            
-            // Progress Bar Update
-            const progressPercent = (weekNum / 52) * 100;
-            document.getElementById('portalProgressBar').style.width = `${progressPercent}%`;
-            
-            // Mock descriptions based on syllabus
-            let desc = "Focus on completing your weekly projects and reviewing lecture notes.";
-            if (schoolData[enrolledFaculty] && schoolData[enrolledFaculty].syllabus[weekNum-1]) {
-                desc = schoolData[enrolledFaculty].syllabus[weekNum-1];
-            }
-            document.getElementById('viewWeekDesc').textContent = desc;
-            
-            // Update Time-Locked Resources
-            updateTimeLocks(weekNum);
-        }
-        
-        function updateTimeLocks(weekNum) {
-            const day = new Date().getDay(); // 0 = Sunday, 1 = Monday, ... 3 = Wednesday, 5 = Friday
-            
-            // P&L Challenge: Locked until Wednesday (Day 3)
-            const pnlCard = document.getElementById('pnlCard');
-            const pnlLock = document.getElementById('pnlLock');
-            if (day < 3) {
-                pnlCard.classList.add('locked');
-                pnlLock.style.display = 'block';
-                pnlCard.onclick = () => showAlert('P&L Challenges unlock every Wednesday.', true);
-            } else {
-                pnlCard.classList.remove('locked');
-                pnlLock.style.display = 'none';
-                pnlCard.onclick = openPnLChallenge;
-            }
-            
-            // Weekly Project: Open only on Fridays (Day 5)
-            const projectCard = document.getElementById('projectCard');
-            const projectLock = document.getElementById('projectLock');
-            if (day !== 5) {
-                projectCard.classList.add('locked');
-                projectLock.style.display = 'block';
-                projectCard.onclick = () => showAlert('Weekly Projects are only open on Fridays for 24 hours.', true);
-            } else {
-                projectCard.classList.remove('locked');
-                projectLock.style.display = 'none';
-                projectCard.onclick = openWeeklyProject;
-            }
-            
-            // Notes Card Update with Dynamic Path
-            const notesCard = document.getElementById('notesCard');
-            // We store the weekNum in a dataset attribute to access it in the click handler
-            notesCard.dataset.week = weekNum;
-        }
-        
-        function openClassNotes() {
-            const weekNum = document.getElementById('notesCard').dataset.week || 1;
-            // Map full faculty name to short code if needed, but here we used keys 'media', 'business', 'coding'
-            // enrolledFaculty variable holds the key (e.g., 'media')
-            const pdfPath = `university/faculty/${enrolledFaculty}/${enrolledFaculty}week${weekNum}.pdf`;
-            
-            // Check if we can actually open it (in a real app, you'd check existence)
-            // For now, we simulate opening it
-            console.log(`Opening PDF: ${pdfPath}`);
-            window.open(pdfPath, '_blank');
-        }
-        
-        function openPnLChallenge() {
-            alert('Starting Weekly P&L Challenge...');
-        }
-        
-        function openWeeklyProject() {
-            alert('Opening Weekly Project Environment...');
+            showAlert(`Application to ${schoolData[selectedFaculty].title} submitted successfully! We will email you shortly.`, false, 6000);
+            document.getElementById('admissionForm').reset();
+            selectedFaculty = null;
         }
 
         const viewerObserver = new MutationObserver((mutations) => {
@@ -1171,7 +1207,7 @@
              // Check URL params for auto-open
              const urlParams = new URLSearchParams(window.location.search);
              if (urlParams.get('action') === 'university') {
-                 checkEnrollmentAndOpen();
+                 showUniversityModal();
              }
              
              document.querySelectorAll('.modal').forEach(modal => {
@@ -1195,14 +1231,28 @@
         });
         
         // --- CONTENT PROTECTION LOGIC ---
-        window.addEventListener('blur', () => { document.querySelectorAll('.protected-content').forEach(el => { el.classList.add('privacy-blur'); }); });
-        window.addEventListener('focus', () => { document.querySelectorAll('.protected-content').forEach(el => { el.classList.remove('privacy-blur'); }); });
+        // Blur content when window loses focus (Screenshot deterrent)
+        window.addEventListener('blur', () => {
+            document.querySelectorAll('.protected-content').forEach(el => {
+                el.classList.add('privacy-blur');
+            });
+        });
+
+        window.addEventListener('focus', () => {
+            document.querySelectorAll('.protected-content').forEach(el => {
+                el.classList.remove('privacy-blur');
+            });
+        });
+        
+        // Detect PrintScreen key (Basic deterrent)
         document.addEventListener('keyup', (e) => {
             if (e.key === 'PrintScreen') {
                 const elements = document.querySelectorAll('.protected-content');
                 elements.forEach(el => el.classList.add('privacy-blur'));
                 alert('Screenshots are not permitted for curriculum content.');
-                setTimeout(() => { elements.forEach(el => el.classList.remove('privacy-blur')); }, 2000);
+                setTimeout(() => {
+                    elements.forEach(el => el.classList.remove('privacy-blur'));
+                }, 2000);
             }
         });
 

@@ -20,7 +20,7 @@
 
 #### **Should HIDE when:**
 - [ ] Opening University
-- [ ] Opening Theme Store
+- [ ] Opening Environment
 - [ ] Opening Premium/Upgrade modal
 - [ ] Opening Language selector
 - [ ] Any modal is active
@@ -34,7 +34,7 @@
 1. Open app on mobile
 2. Click "University" - toggle button should disappear
 3. Close modal - toggle button should reappear
-4. Repeat for Theme Store and other modals
+4. Repeat for Environment and other modals
 
 ---
 
@@ -67,7 +67,7 @@
 
 ---
 
-### 5. **Theme Store on Mobile** ✅
+### 5. **Environment on Mobile** ✅
 - [ ] Themes fill entire modal height
 - [ ] No weird scrollable box inside modal
 - [ ] Grid adapts to screen width
@@ -75,7 +75,7 @@
 - [ ] Theme switching works
 
 **How to Test:**
-1. Open Theme Store
+1. Open Environment
 2. Verify themes fill the screen
 3. Scroll through themes smoothly
 4. Select and apply a theme
@@ -113,7 +113,7 @@
 ### ✅ **Fixed Issues:**
 - [x] Viewport not fullscreen
 - [x] Toggle button visible in modals
-- [x] Theme store has scrollable box
+- [x] Environment has scrollable box
 - [x] Can't dismiss sidebar on mobile
 - [x] Buttons too small to tap
 
@@ -171,7 +171,7 @@ npm start
 3. ✅ Open University - button hides?
 4. ✅ Close University - button shows?
 5. ✅ Tap main content with sidebar open - closes?
-6. ✅ Open Theme Store - fills screen?
+6. ✅ Open Environment - fills screen?
 7. ✅ Complete challenge - all buttons visible?
 8. ✅ Share challenge - link copies?
 
