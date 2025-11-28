@@ -210,7 +210,8 @@
         #downgradeOption:hover { color: var(--error); }
 
         /* University Portal Styles */
-        .university-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; width: 100%; margin-bottom: 32px; }
+        /* Updated Grid Layout for Faculty Cards: 3 columns */
+        .university-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; margin-bottom: 32px; }
         .faculty-card { background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); border-radius: 20px; padding: 24px; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden; }
         .faculty-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-4px); border-color: var(--accent-primary); }
         .faculty-card.selected { background: rgba(10, 132, 255, 0.15); border-color: var(--accent-primary); box-shadow: 0 0 0 2px var(--accent-primary); }
@@ -383,6 +384,105 @@
             .lang-icon { width: 40px; height: 40px; font-size: 20px; }
             .lang-name { font-size: 0.9rem; }
         }
+
+        /* Main Tabs */
+        .main-tabs { display: flex; gap: 0; padding: 12px 16px; background: rgba(0,0,0,0.3); border-radius: 12px; margin: 12px 16px; }
+        .main-tab { flex: 1; background: transparent; border: none; color: var(--text-secondary); padding: 12px 16px; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; text-align: center; }
+        .main-tab:hover { color: var(--text-primary); }
+        .main-tab.active { background: transparent; color: var(--text-primary); border-bottom: 2px solid var(--text-primary); border-radius: 0; }
+        
+        .tab-content { display: none; flex: 1; overflow: hidden; }
+        .tab-content.active { display: flex; flex-direction: column; }
+        
+        .tab-content-inner { flex: 1; overflow-y: auto; padding: 24px; }
+        
+        /* Sub Tabs */
+        .sub-tabs { display: flex; gap: 0; background: rgba(0,0,0,0.3); border-radius: 12px; padding: 8px; margin-bottom: 20px; }
+        .sub-tab { flex: 1; background: transparent; border: none; color: var(--text-secondary); padding: 12px 16px; border-radius: 8px; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease; text-align: center; }
+        .sub-tab:hover { color: var(--text-primary); }
+        .sub-tab.active { background: transparent; color: var(--text-primary); border-bottom: 2px solid var(--text-primary); border-radius: 0; }
+        
+        .sub-tab-content { display: none; }
+        .sub-tab-content.active { display: block; }
+        
+        /* Items Container & Cards */
+        .items-container { display: flex; flex-direction: column; gap: 16px; }
+        
+        .item-card { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 16px; padding: 20px; backdrop-filter: blur(20px); transition: all 0.2s ease; }
+        .item-card:hover { border-color: var(--accent-primary); }
+        
+        .item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+        .item-title-input { background: transparent; border: none; color: var(--text-primary); font-size: 1rem; font-weight: 600; outline: none; min-width: 150px; flex: 1; }
+        .item-title-input:focus { border-bottom: 1px solid var(--accent-primary); }
+        
+        .item-controls { display: flex; gap: 8px; align-items: center; }
+        
+        .serial-badge { background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-secondary); }
+        
+        .visibility-label { font-size: 0.75rem; color: var(--text-tertiary); }
+        
+        .toggle-switch { position: relative; width: 44px; height: 24px; display: inline-block; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider { position: absolute; cursor: pointer; inset: 0; background: rgba(255,255,255,0.2); border-radius: 24px; transition: 0.3s; }
+        .toggle-slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.3s; }
+        .toggle-switch input:checked + .toggle-slider { background: var(--accent-primary); }
+        .toggle-switch input:checked + .toggle-slider:before { transform: translateX(20px); }
+        
+        .icon-btn { background: transparent; border: none; color: var(--text-secondary); padding: 6px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; }
+        .icon-btn:hover { background: var(--bg-glass-light); color: var(--text-primary); }
+        .icon-btn.delete:hover { background: rgba(255, 69, 58, 0.2); color: var(--error); }
+        
+        .item-content { background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px; white-space: pre-wrap; word-break: break-word; }
+        
+        .item-description { font-size: 0.85rem; color: var(--text-tertiary); font-style: italic; }
+        
+        .maybe-tag { display: inline-block; background: rgba(255, 107, 157, 0.2); color: #FF6B9D; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-left: 8px; }
+        
+        .keyword-highlight { color: #5AC8FA; }
+        
+        /* Add New Button */
+        .add-new-btn { background: transparent; border: 2px dashed var(--border-glass); border-radius: 16px; padding: 20px; color: var(--text-secondary); font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; }
+        .add-new-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); background: rgba(10, 132, 255, 0.05); }
+        
+        /* Save Button */
+        .save-btn { width: 32px; height: 32px; background: rgba(255,255,255,0.1); color: var(--text-secondary); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
+        .save-btn:hover { background: rgba(255,255,255,0.2); color: var(--text-primary); }
+        
+        /* Save Type Toggle */
+        .save-type-toggle { display: flex; background: rgba(255,255,255,0.05); border-radius: 10px; padding: 4px; }
+        .type-btn { flex: 1; background: transparent; border: none; color: var(--text-secondary); padding: 10px; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; }
+        .type-btn.active { background: var(--accent-primary); color: white; }
+        
+        .visibility-toggle { display: flex; align-items: center; gap: 12px; }
+        
+        /* Structured Modal Styles */
+        .structured-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; text-align: left; }
+        .struct-category { margin-bottom: 8px; }
+        .struct-title { font-size: 0.8rem; font-weight: 700; color: var(--text-tertiary); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border-glass); padding-bottom: 8px; }
+        .struct-items { display: flex; flex-wrap: wrap; gap: 8px; }
+        .struct-chip { background: rgba(10, 132, 255, 0.15); border: 1px solid rgba(10, 132, 255, 0.3); padding: 6px 12px; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--accent-primary); transition: all 0.2s ease; cursor: pointer; }
+        .struct-chip:hover { background: rgba(10, 132, 255, 0.25); transform: translateY(-2px); }
+        .struct-chip.active { background: var(--accent-primary); color: white; border-color: var(--accent-primary); }
+        
+        /* Highlight Overlay for Structured Mode */
+        .textarea-container { position: relative; width: 100%; min-height: 48px; max-height: 200px; }
+        textarea#questionInput, .input-highlight-overlay {
+            width: 100%; min-height: 48px; max-height: 200px; 
+            font-family: inherit; font-size: 1rem; line-height: 1.4;
+            padding: 0; margin: 0; border: none; resize: none; outline: none;
+            background: transparent; 
+            white-space: pre-wrap; word-wrap: break-word;
+        }
+        textarea#questionInput { position: relative; z-index: 2; color: var(--text-primary); }
+        .input-highlight-overlay { position: absolute; top: 0; left: 0; z-index: 1; color: transparent; pointer-events: none; overflow: hidden; }
+        .h-keyword { font-weight: 700; }
+        .h-reference { color: var(--accent-highlight); background: rgba(90, 200, 250, 0.15); border-radius: 3px; padding: 0 2px; }
+        
+        @media (max-width: 768px) {
+            .structured-grid { grid-template-columns: 1fr; }
+            .main-tabs { padding: 8px 12px; }
+            .main-tab { padding: 6px 12px; font-size: 0.85rem; }
+        }
     </style>
 </head>
 <body>
@@ -418,6 +518,11 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
                 Environment
             </button>
+
+            <button class="sidebar-btn" onclick="showStructuredModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Structured
+            </button>
             
             <div class="sidebar-section-title">Recents</div>
             <div class="history-container">
@@ -438,56 +543,133 @@
         </div>
         
         <div class="main-content">
-            <div class="content-area" id="mainContentArea">
-                <div class="creator-panel" id="creatorPanel">
-                    <div class="prompt-container">
-                        <div class="greeting">
-                            <h1>Learn Different.</h1>
-                            <p>Prompt it, we make it work, you solve it logically.</p>
-                        </div>
-                    </div>
+            <!-- Main Tabs -->
+            <div class="main-tabs">
+                <button class="main-tab active" data-tab="chat" onclick="switchMainTab('chat')">Chat</button>
+                <button class="main-tab" data-tab="contexts" onclick="switchMainTab('contexts')">Contexts</button>
+                <button class="main-tab" data-tab="prompts" onclick="switchMainTab('prompts')">Prompts</button>
+            </div>
 
-                    <div class="input-area-wrapper">
-                        <div class="input-container">
-                            <textarea id="questionInput" placeholder="Describe your coding challenge..."></textarea>
-                            <div class="input-footer">
-                                <div class="input-tools">
-                                    <button id="languageTrigger" class="minimal-btn" onclick="openLanguageModal()">
-                                        <span id="currentLanguageLabel">Language...</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                    </button>
-                                    <select id="languageSelect" style="display: none;">
-                                        <option value="" disabled selected>Language</option>
-                                        <option value="javascript">JavaScript</option>
-                                        <option value="python">Python</option>
-                                        <option value="c">C</option>
-                                        <option value="custom">custom</option>
-                                    </select>
-                                    <select id="difficultySelect" class="minimal-select" onchange="checkSelections()">
-                                        <option value="" disabled selected>Difficulty...</option>
-                                        <option value="beginner">Beginner</option>
-                                        <option value="intermediate">Intermediate</option>
-                                        <option value="advanced">Advanced</option>
-                                    </select>
-                                    <input id="customLanguageInput" class="minimal-select hidden" style="border: 1px solid var(--accent-primary); cursor: text; min-width: 120px;" placeholder="e.g. Assembly..." oninput="checkSelections()">
+            <!-- Chat Tab Content -->
+            <div class="tab-content active" id="chatTab">
+                <div class="content-area" id="mainContentArea">
+                    <div class="creator-panel" id="creatorPanel">
+                        <div class="prompt-container">
+                            <div class="greeting">
+                                <h1>Learn Different.</h1>
+                                <p>Prompt it, we make it work, you solve it logically.</p>
+                            </div>
+                        </div>
+
+                        <div class="input-area-wrapper">
+                            <div class="input-container">
+                                <div class="textarea-container">
+                                    <div id="highlightOverlay" class="input-highlight-overlay"></div>
+                                    <textarea id="questionInput" placeholder="Describe your coding challenge..." oninput="checkSelections()"></textarea>
                                 </div>
-                                <button class="send-btn" onclick="generateChallenge()" id="generateBtn" title="Generate" disabled>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-                                </button>
+                                <div class="input-footer">
+                                    <div class="input-tools">
+                                        <select id="modeSelect" class="minimal-select" onchange="toggleMode()">
+                                            <option value="general" selected>General</option>
+                                            <option value="code">Code</option>
+                                            <option value="structured">Structured</option>
+                                        </select>
+
+                                        <div id="codeTools" style="display: none; gap: 8px; align-items: center; flex-wrap: wrap;">
+                                            <button id="languageTrigger" class="minimal-btn" onclick="openLanguageModal()">
+                                                <span id="currentLanguageLabel">Language...</span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </button>
+
+                                            <select id="languageSelect" style="display: none;">
+                                                <option value="" disabled selected>Language</option>
+                                                <option value="javascript">JavaScript</option>
+                                                <option value="python">Python</option>
+                                                <option value="c">C</option>
+                                                <option value="custom">custom</option>
+                                            </select>
+                                            
+                                            <select id="difficultySelect" class="minimal-select" onchange="checkSelections()">
+                                                <option value="" disabled selected>Difficulty...</option>
+                                                <option value="beginner">Beginner</option>
+                                                <option value="intermediate">Intermediate</option>
+                                                <option value="advanced">Advanced</option>
+                                            </select>
+                                            
+                                            <input id="customLanguageInput" class="minimal-select hidden" style="border: 1px solid var(--accent-primary); cursor: text; min-width: 120px;" placeholder="e.g. Assembly..." oninput="checkSelections()">
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; gap: 8px; align-items: center;">
+                                        <button class="save-btn" onclick="openSaveModal()" title="Save">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                                        </button>
+                                        <button class="send-btn" onclick="generateChallenge()" id="generateBtn" title="Generate" disabled>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="challenge-viewer" id="challengeViewer">
+                        <div class="viewer-header">
+                            <div class="viewer-title">Challenge Artifact</div>
+                            <button class="tool-btn" onclick="closeViewer()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            </button>
+                        </div>
+                        <div class="iframe-wrap">
+                            <iframe id="challengeFrame" src=""></iframe>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="challenge-viewer" id="challengeViewer">
-                    <div class="viewer-header">
-                        <div class="viewer-title">Challenge Artifact</div>
-                        <button class="tool-btn" onclick="closeViewer()">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </div>
+
+            <!-- Contexts Tab Content -->
+            <div class="tab-content" id="contextsTab">
+                <div class="tab-content-inner">
+                    <div class="sub-tabs">
+                        <button class="sub-tab active" data-subtab="mine-contexts" onclick="switchSubTab('contexts', 'mine-contexts')">Mine</button>
+                        <button class="sub-tab" data-subtab="community-contexts" onclick="switchSubTab('contexts', 'community-contexts')">Community</button>
+                    </div>
+                    <div class="sub-tab-content active" id="mine-contexts">
+                        <div class="items-container" id="contextsContainer"></div>
+                        <button class="add-new-btn" onclick="addNewContext()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Add New Context
                         </button>
                     </div>
-                    <div class="iframe-wrap">
-                        <iframe id="challengeFrame" src=""></iframe>
+                    <div class="sub-tab-content" id="community-contexts">
+                        <p style="color: var(--text-secondary); text-align: center; padding: 40px;">Community contexts coming soon...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prompts Tab Content -->
+            <div class="tab-content" id="promptsTab">
+                <div class="tab-content-inner">
+                    <div class="sub-tabs">
+                        <button class="sub-tab active" data-subtab="mine-prompts" onclick="switchSubTab('prompts', 'mine-prompts')">Prompts</button>
+                        <button class="sub-tab" data-subtab="forges" onclick="switchSubTab('prompts', 'forges')">Forges</button>
+                        <button class="sub-tab" data-subtab="molds" onclick="switchSubTab('prompts', 'molds')">Molds</button>
+                        <button class="sub-tab" data-subtab="explore" onclick="switchSubTab('prompts', 'explore')">Explore</button>
+                    </div>
+                    <div class="sub-tab-content active" id="mine-prompts">
+                        <div class="items-container" id="promptsContainer"></div>
+                        <button class="add-new-btn" onclick="addNewPrompt()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Add New Prompt
+                        </button>
+                    </div>
+                    <div class="sub-tab-content" id="forges">
+                        <p style="color: var(--text-secondary); text-align: center; padding: 40px;">Forges coming soon...</p>
+                    </div>
+                    <div class="sub-tab-content" id="molds">
+                        <p style="color: var(--text-secondary); text-align: center; padding: 40px;">Molds coming soon...</p>
+                    </div>
+                    <div class="sub-tab-content" id="explore">
+                        <p style="color: var(--text-secondary); text-align: center; padding: 40px;">Explore coming soon...</p>
                     </div>
                 </div>
             </div>
@@ -612,6 +794,9 @@
                  <p style="color: var(--text-tertiary); font-size: 0.9rem; text-align: left; margin-bottom: 16px;">Applying for: <strong id="selectedFacultyName" style="color: var(--accent-primary);">None selected</strong></p>
                  <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" required placeholder="John Doe"></div>
                  <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" required placeholder="john@example.com"></div>
+                 <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" class="form-input" required placeholder="+1 (555) 000-0000"></div>
+                 <div class="form-group"><label class="form-label">Address</label><input type="text" class="form-input" required placeholder="123 Main St, City, Country"></div>
+                 <div class="form-group"><label class="form-label">Field of Work</label><input type="text" class="form-input" required placeholder="e.g. Graphic Design, Student, Engineer"></div>
                  <div class="form-group"><label class="form-label">Create Password</label><input type="password" class="form-input" required placeholder="••••••••"></div>
                  <div class="form-group"><label class="form-label">Highest Education Level</label><select class="form-input minimal-select" style="text-align: left; width: 100%; border: 1px solid var(--border-glass);"><option>High School</option><option>Undergraduate</option><option>Postgraduate</option><option>Self-Taught</option></select></div>
                  <div class="form-group"><label class="form-label">Portfolio / Github Link (Optional)</label><input type="url" class="form-input" placeholder="https://..."></div>
@@ -702,6 +887,190 @@
              </div>
              <p style="text-align: center; color: rgba(255,255,255,0.5); margin-top: 32px; font-size: 1rem; font-weight: 500;">Free plan includes 250 output lines monthly and 18 languages.</p>
              <div id="downgradeOption" onclick="downgradeToFree()">Return to Free Plan</div>
+        </div>
+    </div>
+
+    <!-- Structured Tutorial Modal -->
+    <div class="modal" id="structuredModal" onclick="if(event.target === this) closeStructuredModal()">
+        <div class="modal-content" style="text-align: center; padding: 40px; width: 90%; max-width: 1000px; max-height: 90vh; overflow-y: auto;">
+            <h2 style="font-size: 2rem; margin-bottom: 12px; font-weight: 800;">Structured P&L</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 32px;">Use these keywords in <strong>Structured Mode</strong> to precisely control the AI. <em>Tap any keyword to learn more.</em></p>
+            
+            <div class="structured-grid">
+                <!-- Start -->
+                <div class="struct-category">
+                    <div class="struct-title">Start</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('in')">in</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('for')">for</span>
+                    </div>
+                </div>
+                
+                <!-- References -->
+                <div class="struct-category">
+                    <div class="struct-title">References</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('context')">context</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('line')">line</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('chimcontext')">chimcontext</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('prompt')">prompt</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('chimprompt')">chimprompt</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('file')">file</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('error')">error</span>
+                    </div>
+                </div>
+
+                <!-- Generation -->
+                <div class="struct-category">
+                    <div class="struct-title">Generation</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('spawn')">spawn</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('rare')">rare</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('create')">create</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('refactor')">refactor</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('explain')">explain</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('optimize')">optimize</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('debug')">debug</span>
+                    </div>
+                </div>
+
+                <!-- Attributes -->
+                <div class="struct-category">
+                    <div class="struct-title">Attributes</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('from')">from</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('makeit')">makeit</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('like')">like</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('but')">but</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('with')">with</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('without')">without</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('prefer')">prefer</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('format')">format</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('steps')">steps</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('between')">between</span>
+                    </div>
+                </div>
+
+                <!-- Position & Style -->
+                <div class="struct-category">
+                    <div class="struct-title">Position & Style</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('nextto')">nextto</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('blame')">blame</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('animate')">animate</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('background')">background</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('font')">font</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('style')">style</span>
+                    </div>
+                </div>
+
+                <!-- Organization -->
+                <div class="struct-category">
+                    <div class="struct-title">Organization</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('maybe')">maybe</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('then')">then</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('forge')">forge</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('mold')">mold</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('jump')">jump</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('using')">using</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Keyword Info Display -->
+            <div id="keywordInfoBox" style="margin-top: 24px; padding: 20px; background: rgba(0,0,0,0.4); border: 1px solid var(--accent-primary); border-radius: 12px; text-align: left; display: none;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <span id="keywordInfoName" style="font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; color: var(--accent-primary); font-weight: 700;"></span>
+                    <span id="keywordInfoCategory" style="font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; color: var(--text-tertiary);"></span>
+                </div>
+                <p id="keywordInfoDesc" style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 12px;"></p>
+                <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
+                    <span style="color: var(--text-tertiary);">Example:</span><br>
+                    <span id="keywordInfoExample" style="color: var(--text-secondary);"></span>
+                </div>
+            </div>
+            
+            <!-- Example (shown when no keyword selected) -->
+            <div id="keywordDefaultExample" style="margin-top: 24px; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 12px; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-secondary);">
+                <strong style="color: var(--accent-primary);">Example:</strong><br><br>
+                <span style="color: #5AC8FA;">*in*</span> swift ; <span style="color: #5AC8FA;">*for*</span> iPhone ; <span style="color: #5AC8FA;">*context*</span> 1 ; <span style="color: #30D158;">*create*</span> search bar ; <span style="color: #5AC8FA;">*from*</span> WhatsApp ; <span style="color: #5AC8FA;">*makeit*</span> static ; <span style="color: #5AC8FA;">*like*</span> iMessage ; <span style="color: #5AC8FA;">*but*</span> new Siri effect ; no search icon
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Modal -->
+    <div class="modal" id="saveModal" onclick="if(event.target === this) closeSaveModal()">
+        <div class="modal-content" style="padding: 32px; width: 90%; max-width: 500px;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 24px; font-weight: 700; text-align: center;">Save Content</h2>
+            
+            <div class="save-type-toggle">
+                <button class="type-btn active" data-type="context" onclick="setSaveType('context')">Context</button>
+                <button class="type-btn" data-type="prompt" onclick="setSaveType('prompt')">Prompt</button>
+            </div>
+            
+            <div class="form-group" style="margin-top: 20px;">
+                <label class="form-label">Title *</label>
+                <input type="text" id="saveTitle" class="form-input" placeholder="Enter a title..." required>
+            </div>
+            
+            <div class="form-group" style="margin-top: 16px;">
+                <label class="form-label">Description (optional)</label>
+                <textarea id="saveDescription" class="form-input" style="min-height: 80px; resize: vertical;" placeholder="Add a description..."></textarea>
+            </div>
+            
+            <div class="visibility-toggle" style="margin-top: 20px;">
+                <span style="color: var(--text-secondary);">Visibility:</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="savePublic">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span id="visibilityLabel" style="color: var(--text-secondary);">Private</span>
+            </div>
+            
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button onclick="closeSaveModal()" class="minimal-btn" style="flex: 1; justify-content: center; padding: 12px;">Cancel</button>
+                <button onclick="confirmSave()" class="minimal-btn" style="flex: 1; justify-content: center; padding: 12px; background: var(--accent-primary); color: white;">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal" onclick="if(event.target === this) closeEditModal()">
+        <div class="modal-content" style="padding: 32px; width: 90%; max-width: 600px;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 24px; font-weight: 700; text-align: center;" id="editModalTitle">Edit Item</h2>
+            
+            <input type="hidden" id="editItemType">
+            <input type="hidden" id="editItemSerial">
+            
+            <div class="form-group">
+                <label class="form-label">Title</label>
+                <input type="text" id="editTitle" class="form-input" placeholder="Enter a title...">
+            </div>
+            
+            <div class="form-group" style="margin-top: 16px;">
+                <label class="form-label">Content</label>
+                <textarea id="editContent" class="form-input" style="min-height: 150px; resize: vertical; font-family: 'JetBrains Mono', monospace;" placeholder="Enter content..."></textarea>
+            </div>
+            
+            <div class="form-group" style="margin-top: 16px;">
+                <label class="form-label">Description (optional)</label>
+                <textarea id="editDescription" class="form-input" style="min-height: 80px; resize: vertical;" placeholder="Add a description..."></textarea>
+            </div>
+            
+            <div class="visibility-toggle" style="margin-top: 20px;">
+                <span style="color: var(--text-secondary);">Visibility:</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="editPublic">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span id="editVisibilityLabel" style="color: var(--text-secondary);">Private</span>
+            </div>
+            
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button onclick="closeEditModal()" class="minimal-btn" style="flex: 1; justify-content: center; padding: 12px;">Cancel</button>
+                <button onclick="confirmEdit()" class="minimal-btn" style="flex: 1; justify-content: center; padding: 12px; background: var(--accent-primary); color: white;">Save Changes</button>
+            </div>
         </div>
     </div>
 
@@ -1186,14 +1555,42 @@
             document.getElementById('creatorPanel').style.display = 'flex';
         }
         
+        function toggleMode() {
+            const mode = document.getElementById('modeSelect').value;
+            const codeTools = document.getElementById('codeTools');
+            
+            if (mode === 'code') {
+                codeTools.style.display = 'flex';
+                checkSelections();
+            } else {
+                codeTools.style.display = 'none';
+                // For general mode, we enable the button
+                document.getElementById('generateBtn').disabled = false;
+            }
+        }
+
         function checkSelections() {
+            const questionInput = document.getElementById('questionInput').value.trim();
+            const mode = document.getElementById('modeSelect').value;
+            const generateBtn = document.getElementById('generateBtn');
+
+            const hasInput = questionInput.length > 0;
+
+            if (mode === 'general') {
+                generateBtn.disabled = !hasInput;
+                return;
+            }
+
+            // Code mode logic
             const language = document.getElementById('languageSelect').value;
             const difficulty = document.getElementById('difficultySelect').value;
             const customLanguage = document.getElementById('customLanguageInput').value;
+
             let isLanguageValid = language !== "";
             if (language === 'custom') isLanguageValid = customLanguage.trim() !== "";
             const isDifficultyValid = difficulty !== "";
-            document.getElementById('generateBtn').disabled = !(isLanguageValid && isDifficultyValid);
+
+            generateBtn.disabled = !(hasInput && isLanguageValid && isDifficultyValid);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -1226,6 +1623,9 @@
                      }
                  });
              }
+             
+             // Initial check for button state
+             checkSelections();
         });
         
         // --- CONTENT PROTECTION LOGIC ---
@@ -1343,6 +1743,546 @@
                 if (customBtn) { customBtn.addEventListener('click', () => { tokenClient.requestAccessToken(); }); }
             } catch (error) { console.error("Error initializing Google Token Client:", error); showAlert("Could not load Google Sign-In.", true); }
         });
+
+        // ============ TABS SYSTEM ============
+        function switchMainTab(tabName) {
+            document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.main-tab[data-tab="${tabName}"]`).classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            if (tabName === 'contexts') renderContexts();
+            if (tabName === 'prompts') renderPrompts();
+        }
+        
+        function switchSubTab(parent, subTabId) {
+            const container = document.getElementById(parent + 'Tab');
+            container.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+            container.querySelectorAll('.sub-tab-content').forEach(t => t.classList.remove('active'));
+            container.querySelector(`.sub-tab[data-subtab="${subTabId}"]`).classList.add('active');
+            document.getElementById(subTabId).classList.add('active');
+        }
+
+        // ============ STRUCTURED MODAL ============
+        function showStructuredModal() { document.getElementById('structuredModal').classList.add('active'); updateToggleButtonVisibility(); }
+        function closeStructuredModal() { document.getElementById('structuredModal').classList.remove('active'); updateToggleButtonVisibility(); }
+
+        // Keyword definitions
+        const keywordDefinitions = {
+            // Start
+            'in': { category: 'Start', desc: 'Specifies the programming language or environment for your request.', example: '*in* swift ; *create* login screen' },
+            'for': { category: 'Start', desc: 'Defines the target platform or device.', example: '*for* iPhone ; *create* navigation bar' },
+            
+            // References
+            'context': { category: 'References', desc: 'References a saved context by its serial number. Use to include previously saved code or specifications.', example: '*context* #C23b5js8 ; *refactor* with new API' },
+            'line': { category: 'References', desc: 'References specific line numbers in your code or context.', example: '*line* 45-60 ; *explain* this function' },
+            'chimcontext': { category: 'References', desc: 'References a public community context shared by other users.', example: '*chimcontext* #C8hn2k4m ; *create* similar layout' },
+            'prompt': { category: 'References', desc: 'References one of your saved prompts by its serial number.', example: '*prompt* %P9x2k3m1 ; apply to new project' },
+            'chimprompt': { category: 'References', desc: 'References a public community prompt shared by other users.', example: '*chimprompt* #Pab3k9x2 ; customize for my needs' },
+            'file': { category: 'References', desc: 'References an uploaded file or attachment.', example: '*file* design.png ; *create* matching UI' },
+            'error': { category: 'References', desc: 'References an error message to help debug or explain the issue.', example: '*error* "undefined is not a function" ; *debug*' },
+            
+            // Generation
+            'spawn': { category: 'Generation', desc: 'Generates multiple variations or instances of something.', example: '*spawn* 5 color themes ; *like* Material Design' },
+            'rare': { category: 'Generation', desc: 'Requests unique, uncommon, or creative solutions instead of standard approaches.', example: '*rare* ; *create* loading animation' },
+            'create': { category: 'Generation', desc: 'The primary command to generate new code, components, or content.', example: '*create* user profile card ; *with* avatar and bio' },
+            'refactor': { category: 'Generation', desc: 'Improves existing code structure without changing its behavior.', example: '*context* 1 ; *refactor* for better readability' },
+            'explain': { category: 'Generation', desc: 'Provides detailed explanation of code, concepts, or logic.', example: '*line* 20-35 ; *explain* step by step' },
+            'optimize': { category: 'Generation', desc: 'Improves code performance, efficiency, or resource usage.', example: '*context* 1 ; *optimize* for speed' },
+            'debug': { category: 'Generation', desc: 'Finds and fixes bugs or issues in the code.', example: '*error* "null reference" ; *debug* ; *explain* fix' },
+            
+            // Attributes
+            'from': { category: 'Attributes', desc: 'References a design or functionality from an existing app or source as inspiration.', example: '*create* chat bubble ; *from* WhatsApp' },
+            'makeit': { category: 'Attributes', desc: 'Applies a specific quality or characteristic to the output.', example: '*create* button ; *makeit* rounded ; *makeit* animated' },
+            'like': { category: 'Attributes', desc: 'Makes the output similar to a referenced style or example.', example: '*create* navbar ; *like* Apple.com' },
+            'but': { category: 'Attributes', desc: 'Modifies or overrides a specific aspect of the reference.', example: '*like* Instagram stories ; *but* vertical scroll' },
+            'with': { category: 'Attributes', desc: 'Includes additional features or elements.', example: '*create* form ; *with* validation ; *with* dark mode' },
+            'without': { category: 'Attributes', desc: 'Excludes specific features or elements.', example: '*create* modal ; *without* close button ; *without* backdrop' },
+            'prefer': { category: 'Attributes', desc: 'Sets a preference for approach, library, or method.', example: '*prefer* flexbox ; *create* grid layout' },
+            'format': { category: 'Attributes', desc: 'Specifies the output format or structure.', example: '*explain* API ; *format* bullet points' },
+            'steps': { category: 'Attributes', desc: 'Requests output broken into numbered steps or phases.', example: '*create* auth flow ; *steps* 5' },
+            'between': { category: 'Attributes', desc: 'Specifies a range or constraint between values.', example: '*spawn* icons ; *between* 24px and 48px' },
+            
+            // Position & Style
+            'nextto': { category: 'Position & Style', desc: 'Positions an element relative to another element.', example: '*create* tooltip ; *nextto* button' },
+            'blame': { category: 'Position & Style', desc: 'Highlights or annotates specific parts of code with explanations.', example: '*blame* ; *context* 1 ; show problem areas' },
+            'animate': { category: 'Position & Style', desc: 'Adds animation or motion to elements.', example: '*create* card ; *animate* on hover ; *like* Material' },
+            'background': { category: 'Position & Style', desc: 'Specifies background styling for elements.', example: '*create* hero section ; *background* gradient blue' },
+            'font': { category: 'Position & Style', desc: 'Specifies typography settings.', example: '*create* heading ; *font* Inter ; *makeit* bold' },
+            'style': { category: 'Position & Style', desc: 'Applies general styling or a design system.', example: '*style* glassmorphism ; *create* card component' },
+            
+            // Organization
+            'maybe': { category: 'Organization', desc: 'Marks something as optional or conditional in the output.', example: '*create* form ; *with* email ; *maybe* phone number' },
+            'then': { category: 'Organization', desc: 'Chains sequential actions or defines what happens next.', example: '*create* button ; *then* show modal on click' },
+            'forge': { category: 'Organization', desc: 'Combines multiple prompts or contexts into a reusable template.', example: '*forge* "auth-flow" ; *from* login + signup + reset' },
+            'mold': { category: 'Organization', desc: 'Creates a reusable pattern or template from existing code.', example: '*mold* "api-call" ; *from* context 1' },
+            'jump': { category: 'Organization', desc: 'Skips to a specific section or jumps between contexts.', example: '*jump* line 100 ; *explain* from there' },
+            'using': { category: 'Organization', desc: 'Specifies libraries, frameworks, or tools to use.', example: '*create* chart ; *using* Chart.js ; *in* React' }
+        };
+
+        function showKeywordInfo(keyword) {
+            const info = keywordDefinitions[keyword];
+            if (!info) return;
+            
+            // Remove active class from all chips
+            document.querySelectorAll('.struct-chip').forEach(chip => chip.classList.remove('active'));
+            // Add active class to clicked chip
+            event.target.classList.add('active');
+            
+            // Hide default example, show info box
+            document.getElementById('keywordDefaultExample').style.display = 'none';
+            const infoBox = document.getElementById('keywordInfoBox');
+            infoBox.style.display = 'block';
+            
+            // Populate info
+            document.getElementById('keywordInfoName').textContent = keyword;
+            document.getElementById('keywordInfoCategory').textContent = info.category;
+            document.getElementById('keywordInfoDesc').textContent = info.desc;
+            document.getElementById('keywordInfoExample').innerHTML = info.example.replace(/\*(\w+)\*/g, '<span style="color: #5AC8FA;">*$1*</span>');
+            
+            // Scroll to info box
+            infoBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // ============ SAVE MODAL ============
+        let saveType = 'context';
+        
+        function openSaveModal() {
+            const content = document.getElementById('questionInput').value.trim();
+            if (!content) { showAlert('Please enter some content first.', true); return; }
+            document.getElementById('saveModal').classList.add('active');
+            updateToggleButtonVisibility();
+        }
+        
+        function closeSaveModal() {
+            document.getElementById('saveModal').classList.remove('active');
+            document.getElementById('saveTitle').value = '';
+            document.getElementById('saveDescription').value = '';
+            document.getElementById('savePublic').checked = false;
+            document.getElementById('visibilityLabel').textContent = 'Private';
+            updateToggleButtonVisibility();
+        }
+        
+        function setSaveType(type) {
+            saveType = type;
+            document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector(`.type-btn[data-type="${type}"]`).classList.add('active');
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const publicToggle = document.getElementById('savePublic');
+            if (publicToggle) {
+                publicToggle.addEventListener('change', () => {
+                    document.getElementById('visibilityLabel').textContent = publicToggle.checked ? 'Public' : 'Private';
+                });
+            }
+        });
+        
+        function generateSerial() {
+            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            let serial = '';
+            for (let i = 0; i < 8; i++) serial += chars[Math.floor(Math.random() * chars.length)];
+            return serial;
+        }
+        
+        function confirmSave() {
+            const title = document.getElementById('saveTitle').value.trim();
+            const description = document.getElementById('saveDescription').value.trim();
+            const isPublic = document.getElementById('savePublic').checked;
+            const content = document.getElementById('questionInput').value.trim();
+            
+            if (!title) { showAlert('Please enter a title.', true); return; }
+            
+            const serial = generateSerial();
+            const prefix = saveType === 'context' ? 'C' : 'P';
+            const fullSerial = prefix + serial;
+            
+            const item = {
+                title,
+                serial: fullSerial,
+                content,
+                description,
+                isPublic,
+                createdAt: new Date().toISOString()
+            };
+            
+            if (saveType === 'context') {
+                const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+                contexts.push(item);
+                localStorage.setItem('savedContexts', JSON.stringify(contexts));
+            } else {
+                const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+                prompts.push(item);
+                localStorage.setItem('savedPrompts', JSON.stringify(prompts));
+            }
+            
+            const refSymbol = isPublic ? '#' : '%';
+            showAlert(`Saved! Reference: ${refSymbol}${fullSerial}`, false);
+            closeSaveModal();
+        }
+
+        // ============ EDIT MODAL ============
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+        }
+        
+        function confirmEdit() {
+            const type = document.getElementById('editItemType').value;
+            const index = parseInt(document.getElementById('editItemSerial').value);
+            const title = document.getElementById('editTitle').value.trim();
+            const content = document.getElementById('editContent').value.trim();
+            const description = document.getElementById('editDescription').value.trim();
+            const isPublic = document.getElementById('editPublic').checked;
+            
+            if (!title) { showAlert('Please enter a title.', true); return; }
+            
+            if (type === 'context') {
+                const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+                contexts[index].title = title;
+                contexts[index].content = content;
+                contexts[index].description = description;
+                contexts[index].isPublic = isPublic;
+                localStorage.setItem('savedContexts', JSON.stringify(contexts));
+                renderContexts();
+            } else {
+                const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+                prompts[index].title = title;
+                prompts[index].content = content;
+                prompts[index].description = description;
+                prompts[index].isPublic = isPublic;
+                localStorage.setItem('savedPrompts', JSON.stringify(prompts));
+                renderPrompts();
+            }
+            
+            showAlert('Changes saved!', false);
+            closeEditModal();
+        }
+        
+        // Edit modal visibility toggle listener
+        document.addEventListener('DOMContentLoaded', () => {
+            const editPublicToggle = document.getElementById('editPublic');
+            if (editPublicToggle) {
+                editPublicToggle.addEventListener('change', () => {
+                    document.getElementById('editVisibilityLabel').textContent = editPublicToggle.checked ? 'Public' : 'Private';
+                });
+            }
+        });
+
+        // ============ CONTEXTS CRUD ============
+        function renderContexts() {
+            const container = document.getElementById('contextsContainer');
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            container.innerHTML = '';
+            
+            contexts.forEach((ctx, index) => {
+                const refSymbol = ctx.isPublic ? '#' : '%';
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <div class="item-header">
+                        <input type="text" class="item-title-input" value="${escapeHtml(ctx.title)}" onchange="updateContextTitle(${index}, this.value)">
+                        <div class="item-controls">
+                            <span class="serial-badge">${refSymbol}${ctx.serial}</span>
+                            <span class="visibility-label">${ctx.isPublic ? 'Public' : 'Private'}</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" ${ctx.isPublic ? 'checked' : ''} onchange="toggleContextVisibility(${index})">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <button class="icon-btn" onclick="editContext(${index})" title="Edit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </button>
+                            <button class="icon-btn delete" onclick="deleteContext(${index})" title="Delete">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="item-content">${escapeHtml(ctx.content)}</div>
+                    ${ctx.description ? `<div class="item-description">${escapeHtml(ctx.description)}</div>` : ''}
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function addNewContext() {
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            contexts.push({
+                title: 'New Context',
+                serial: 'C' + generateSerial(),
+                content: '',
+                description: '',
+                isPublic: false,
+                createdAt: new Date().toISOString()
+            });
+            localStorage.setItem('savedContexts', JSON.stringify(contexts));
+            renderContexts();
+        }
+        
+        function updateContextTitle(index, title) {
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            contexts[index].title = title;
+            localStorage.setItem('savedContexts', JSON.stringify(contexts));
+        }
+        
+        function toggleContextVisibility(index) {
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            contexts[index].isPublic = !contexts[index].isPublic;
+            localStorage.setItem('savedContexts', JSON.stringify(contexts));
+            renderContexts();
+        }
+        
+        function deleteContext(index) {
+            if (!confirm('Delete this context?')) return;
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            contexts.splice(index, 1);
+            localStorage.setItem('savedContexts', JSON.stringify(contexts));
+            renderContexts();
+        }
+        
+        function editContext(index) {
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            const context = contexts[index];
+            document.getElementById('editModalTitle').textContent = 'Edit Context';
+            document.getElementById('editItemType').value = 'context';
+            document.getElementById('editItemSerial').value = index;
+            document.getElementById('editTitle').value = context.title;
+            document.getElementById('editContent').value = context.content;
+            document.getElementById('editDescription').value = context.description || '';
+            document.getElementById('editPublic').checked = context.isPublic;
+            document.getElementById('editVisibilityLabel').textContent = context.isPublic ? 'Public' : 'Private';
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        // ============ PROMPTS CRUD ============
+        function renderPrompts() {
+            const container = document.getElementById('promptsContainer');
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            container.innerHTML = '';
+            
+            prompts.forEach((p, index) => {
+                const refSymbol = p.isPublic ? '#' : '%';
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <div class="item-header">
+                        <input type="text" class="item-title-input" value="${escapeHtml(p.title)}" onchange="updatePromptTitle(${index}, this.value)">
+                        <div class="item-controls">
+                            <span class="serial-badge">${refSymbol}${p.serial}</span>
+                            <span class="visibility-label">${p.isPublic ? 'Public' : 'Private'}</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" ${p.isPublic ? 'checked' : ''} onchange="togglePromptVisibility(${index})">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <button class="icon-btn" onclick="editPrompt(${index})" title="Edit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </button>
+                            <button class="icon-btn delete" onclick="deletePrompt(${index})" title="Delete">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="item-content">${formatPromptContent(p.content)}</div>
+                    ${p.description ? `<div class="item-description">${escapeHtml(p.description)}</div>` : ''}
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function addNewPrompt() {
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            prompts.push({
+                title: 'New Prompt',
+                serial: 'P' + generateSerial(),
+                content: '',
+                description: '',
+                isPublic: false,
+                createdAt: new Date().toISOString()
+            });
+            localStorage.setItem('savedPrompts', JSON.stringify(prompts));
+            renderPrompts();
+        }
+        
+        function updatePromptTitle(index, title) {
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            prompts[index].title = title;
+            localStorage.setItem('savedPrompts', JSON.stringify(prompts));
+        }
+        
+        function togglePromptVisibility(index) {
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            prompts[index].isPublic = !prompts[index].isPublic;
+            localStorage.setItem('savedPrompts', JSON.stringify(prompts));
+            renderPrompts();
+        }
+        
+        function deletePrompt(index) {
+            if (!confirm('Delete this prompt?')) return;
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            prompts.splice(index, 1);
+            localStorage.setItem('savedPrompts', JSON.stringify(prompts));
+            renderPrompts();
+        }
+        
+        function editPrompt(index) {
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            const prompt = prompts[index];
+            document.getElementById('editModalTitle').textContent = 'Edit Prompt';
+            document.getElementById('editItemType').value = 'prompt';
+            document.getElementById('editItemSerial').value = index;
+            document.getElementById('editTitle').value = prompt.title;
+            document.getElementById('editContent').value = prompt.content;
+            document.getElementById('editDescription').value = prompt.description || '';
+            document.getElementById('editPublic').checked = prompt.isPublic;
+            document.getElementById('editVisibilityLabel').textContent = prompt.isPublic ? 'Public' : 'Private';
+            document.getElementById('editModal').classList.add('active');
+        }
+        
+        function formatPromptContent(content) {
+            const keywords = ['in', 'for', 'context', 'line', 'chimcontext', 'prompt', 'chimprompt', 'file', 'error', 'spawn', 'rare', 'create', 'refactor', 'explain', 'optimize', 'debug', 'from', 'makeit', 'like', 'but', 'with', 'without', 'prefer', 'format', 'steps', 'between', 'nextto', 'blame', 'animate', 'background', 'font', 'style', 'maybe', 'then', 'forge', 'mold', 'jump', 'using'];
+            let formatted = escapeHtml(content);
+            keywords.forEach(kw => {
+                const regex = new RegExp(`\\b${kw}\\b`, 'gi');
+                formatted = formatted.replace(regex, `<span class="keyword-highlight">$&</span>`);
+            });
+            return formatted;
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ============ STRUCTURED HIGHLIGHTING ============
+        function updateStructuredHighlights(text) {
+            const overlay = document.getElementById('highlightOverlay');
+            if (!overlay || document.getElementById('modeSelect').value !== 'structured') return;
+            
+            const keywords = ['in', 'for', 'context', 'line', 'chimcontext', 'prompt', 'chimprompt', 'file', 'error', 'spawn', 'rare', 'create', 'refactor', 'explain', 'optimize', 'debug', 'from', 'makeit', 'like', 'but', 'with', 'without', 'prefer', 'format', 'steps', 'between', 'nextto', 'blame', 'animate', 'background', 'font', 'style', 'maybe', 'then', 'forge', 'mold', 'jump', 'using'];
+            
+            let formatted = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            
+            // Highlight references (#C, #P, %C, %P)
+            formatted = formatted.replace(/([#%])([CP])([a-z0-9]{8,9})/gi, '<span class="h-reference">$&</span>');
+            
+            // Highlight keywords (bold only now)
+            keywords.forEach(kw => {
+                const regex = new RegExp(`\\b${kw}\\b`, 'gi');
+                formatted = formatted.replace(regex, `<span class="h-keyword">$&</span>`);
+            });
+            if (formatted[formatted.length - 1] === '\n') formatted += '&nbsp;';
+            overlay.innerHTML = formatted;
+            overlay.scrollTop = document.getElementById('questionInput').scrollTop;
+        }
+
+        // Update toggleMode to handle structured mode
+        const originalToggleMode = typeof toggleMode !== 'undefined' ? toggleMode : null;
+        function toggleMode() {
+            const mode = document.getElementById('modeSelect').value;
+            const codeTools = document.getElementById('codeTools');
+            const overlay = document.getElementById('highlightOverlay');
+            
+            if (mode === 'code') {
+                codeTools.style.display = 'flex';
+            } else {
+                codeTools.style.display = 'none';
+            }
+            
+            if (mode === 'structured') {
+                checkSelections();
+            } else if (overlay) {
+                overlay.innerHTML = '';
+            }
+            
+            checkSelections();
+        }
+
+        // Update checkSelections to handle structured mode
+        const originalCheckSelections = typeof checkSelections !== 'undefined' ? checkSelections : null;
+        function checkSelections() {
+            const questionInput = document.getElementById('questionInput');
+            const val = questionInput.value;
+            const mode = document.getElementById('modeSelect').value;
+            const generateBtn = document.getElementById('generateBtn');
+            const hasInput = val.trim().length > 0;
+
+            if (mode === 'general') {
+                generateBtn.disabled = !hasInput;
+                return;
+            }
+            
+            if (mode === 'structured') {
+                generateBtn.disabled = !hasInput;
+                updateStructuredHighlights(val);
+                return;
+            }
+
+            // Code mode
+            const language = document.getElementById('languageSelect').value;
+            const difficulty = document.getElementById('difficultySelect').value;
+            const customLanguage = document.getElementById('customLanguageInput').value;
+            let isLanguageValid = language !== "";
+            if (language === 'custom') isLanguageValid = customLanguage.trim() !== "";
+            const isDifficultyValid = difficulty !== "";
+            generateBtn.disabled = !(hasInput && isLanguageValid && isDifficultyValid);
+        }
+
+        // Scroll sync for structured mode
+        document.addEventListener('DOMContentLoaded', () => {
+            const qInput = document.getElementById('questionInput');
+            const overlay = document.getElementById('highlightOverlay');
+            if (qInput && overlay) {
+                qInput.addEventListener('scroll', () => {
+                    overlay.scrollTop = qInput.scrollTop;
+                });
+            }
+        });
+
+        // ============ REFERENCE EXPANSION ============
+        // Expands #Cxxxxxx, #Pxxxxxx, %Cxxxxxx, %Pxxxxxx references to their content
+        function expandReferences(text) {
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            
+            // Pattern matches #C, #P, %C, %P followed by alphanumeric serial
+            const refPattern = /([#%])([CP])([a-z0-9]{8,9})/gi;
+            
+            return text.replace(refPattern, (match, symbol, type, serial) => {
+                const fullSerial = type.toUpperCase() + serial.toLowerCase();
+                let found = null;
+                
+                if (type.toUpperCase() === 'C') {
+                    found = contexts.find(c => c.serial.toLowerCase() === fullSerial.toLowerCase());
+                } else {
+                    found = prompts.find(p => p.serial.toLowerCase() === fullSerial.toLowerCase());
+                }
+                
+                if (found) {
+                    // Recursively expand nested references
+                    return expandReferences(found.content);
+                }
+                return match; // Return original if not found
+            });
+        }
+        
+        // Get expanded text for sending
+        function getExpandedInput() {
+            const input = document.getElementById('questionInput').value;
+            return expandReferences(input);
+        }
+        
+        // Preview expansion on hover or for display
+        function getReferencedItem(serial) {
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            
+            const type = serial.charAt(0).toUpperCase();
+            if (type === 'C') {
+                return contexts.find(c => c.serial.toLowerCase() === serial.toLowerCase());
+            } else if (type === 'P') {
+                return prompts.find(p => p.serial.toLowerCase() === serial.toLowerCase());
+            }
+            return null;
+        }
     </script>
 </body>
 </html>
