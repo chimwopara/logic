@@ -16,9 +16,9 @@
 
 ---
 
-### 🏪 CW Academy
+### 🏪 University
 
-**Access:** Sidebar → "CW Academy"
+**Access:** Sidebar → "University"
 
 **Features:**
 - Browse all shared challenges
@@ -45,7 +45,7 @@
 
 **Toggle Button Rules:**
 - Shows: Main screen, challenge viewer
-- Hides: CW Academy, Theme Store, Modals
+- Hides: University, Theme Store, Modals
 
 ---
 
@@ -103,7 +103,7 @@ https://yoursite.com/?challenge=ch_1699644123_abc123
 ### ✅ Implemented
 - Solve Differently button
 - Share with Community button
-- CW Academy with cards
+- University with cards
 - Share URL generation
 - Clipboard auto-copy
 - Mobile fullscreen

@@ -73,7 +73,7 @@ http://localhost:3000
 
 ---
 
-### 2. CW Academy 🏪
+### 2. University 🏪
 
 **Fully functional community marketplace:**
 
@@ -83,7 +83,7 @@ http://localhost:3000
 - Filter by language/difficulty (future)
 - Persistent storage (localStorage)
 
-**Access:** Sidebar → "CW Academy"
+**Access:** Sidebar → "University"
 
 **Features:**
 - Auto-updates when challenges are shared
@@ -104,7 +104,7 @@ http://localhost:3000
 
 #### ✅ **Smart Toggle Button**
 - **Auto-hides** when viewing:
-  - CW Academy
+  - University
   - Theme Store
   - Upgrade modal
   - Language selector
@@ -241,7 +241,7 @@ function updateToggleButtonVisibility() {
 ### Playing Shared Challenge
 ```
 1. Open sidebar
-2. Click "CW Academy"
+2. Click "University"
 3. See all shared challenges in cards
 4. Click "Play Challenge"
 5. Challenge loads in viewer
@@ -298,7 +298,7 @@ function updateToggleButtonVisibility() {
 - [ ] Test on Android Chrome
 - [ ] Test sharing functionality
 - [ ] Test all three buttons
-- [ ] Test CW Academy
+- [ ] Test University
 - [ ] Test mobile sidebar behavior
 - [ ] Test theme store scrolling
 
@@ -338,7 +338,7 @@ function updateToggleButtonVisibility() {
 
 ✅ **"Solve Differently" button** - Works perfectly
 ✅ **"Share with Community" button** - Generates URLs
-✅ **CW Academy** - Fully functional
+✅ **University** - Fully functional
 ✅ **Mobile fullscreen** - iOS & Android
 ✅ **Hide toggle in modals** - Smart behavior
 ✅ **Tap to dismiss sidebar** - On mobile
@@ -398,7 +398,7 @@ pm2 logs logic-labs
 
 1. ✅ Index.html improvements respected
 2. ✅ Two new completion buttons added
-3. ✅ CW Academy created
+3. ✅ University created
 4. ✅ Share functionality working
 5. ✅ Mobile fully optimized
 6. ✅ All fixes applied

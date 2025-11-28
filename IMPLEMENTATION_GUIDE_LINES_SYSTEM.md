@@ -63,7 +63,7 @@ Dec 1: Get +1000 lines → Total: 1400 lines
 
 **Free ($0/month)**
 - 1,000 lines/month
-- Access to CW Academy ✅
+- Access to University ✅
 - Can create challenges ✅
 - Earn lines from others ✅
 - Daily challenges ✅
@@ -92,7 +92,7 @@ Dec 1: Get +1000 lines → Total: 1400 lines
 
 ---
 
-### 3. CW Academy (Auto-Upload System)
+### 3. University (Auto-Upload System)
 
 #### Automatic Sharing Flow:
 ```
@@ -100,7 +100,7 @@ User creates challenge
         ↓
 Generate unique serial (e.g., "23b4yz")
         ↓
-Auto-add to CW Academy
+Auto-add to University
         ↓
 Available to all users immediately
         ↓
@@ -703,7 +703,7 @@ class FriendsLeague {
 ### Phase 2: Frontend Updates  
 1. Update UI for membership tiers
 2. Add line counter/progress bars
-3. Implement CW Academy redesign
+3. Implement University redesign
 4. Add serial number display
 
 ### Phase 3: New Features
@@ -759,7 +759,7 @@ Profit margin: 99.4% 🎉
 - [ ] Add monthly reset logic
 - [ ] Implement line rollover
 
-### CW Academy:
+### University:
 - [ ] Auto-upload all challenges
 - [ ] Add serial number to URLs
 - [ ] Create search/filter UI

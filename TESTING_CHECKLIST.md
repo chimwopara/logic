@@ -18,7 +18,7 @@
   □ Share with Community
 □ Click "Share with Community"
 □ Verify alert shows with URL
-□ Open "CW Academy" in sidebar
+□ Open "University" in sidebar
 □ Verify your challenge appears
 □ Click "Play Challenge"
 □ Verify challenge loads
@@ -39,9 +39,9 @@
 □ Open sidebar
 □ Tap main content
 □ Verify sidebar closes
-□ Click "CW Academy"
+□ Click "University"
 □ Verify toggle button HIDES
-□ Close CW Academy
+□ Close University
 □ Verify toggle button SHOWS
 □ Click "Theme Store"  
 □ Verify toggle button HIDES
@@ -51,7 +51,7 @@
 □ Verify all 3 buttons visible
 □ Click "Share"
 □ Verify link copies
-□ Open CW Academy
+□ Open University
 □ Verify challenge card appears
 □ Click "Play Challenge"
 □ Verify it loads
@@ -99,7 +99,7 @@
 ### ✅ Mobile Layout (Store Open)
 ```
 ┌───────────────────────┐
-│       CW Academy │ ← No toggle button!
+│       University │ ← No toggle button!
 │                       │
 │  ┌─────────────────┐  │
 │  │ Challenge 1     │  │
@@ -136,7 +136,7 @@
 |---------|---------|--------|--------|
 | Solve Differently Button | ✅ | ✅ | Working |
 | Share with Community | ✅ | ✅ | Working |
-| CW Academy | ✅ | ✅ | Working |
+| University | ✅ | ✅ | Working |
 | URL Generation | ✅ | ✅ | Working |
 | Clipboard Copy | ✅ | ✅ | Working |
 | Mobile Fullscreen | N/A | ✅ | Working |
@@ -180,7 +180,7 @@ navigator.clipboard.writeText('test').then(
 
 ---
 
-### Issue: CW Academy empty
+### Issue: University empty
 **Check:**
 ```javascript
 // In browser console
@@ -243,7 +243,7 @@ Before deploying, confirm:
 ✅ No JavaScript errors
 ✅ No CSS layout issues
 ✅ Sharing generates valid URLs
-✅ CW Academy displays cards
+✅ University displays cards
 ✅ Toggle button behaves correctly
 ✅ Theme Store fills screen
 ✅ All three buttons visible on completion

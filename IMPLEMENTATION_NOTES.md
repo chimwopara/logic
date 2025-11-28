@@ -25,7 +25,7 @@ Shareable URL generated
        ↓
 Link copied to clipboard
        ↓
-Challenge appears in CW Academy
+Challenge appears in University
 ```
 
 ### Code Flow
@@ -112,7 +112,7 @@ window.shareCurrentChallenge = function() {
 
 ---
 
-## 2. CW Academy
+## 2. University
 
 ### Loading Challenges
 
@@ -478,7 +478,7 @@ currentChallenge:  ~2-5KB
 
 3. **Lazy Loading**
    - Modals load content on open
-   - CW Academy loads on demand
+   - University loads on demand
 
 4. **Debouncing** (future)
    - Could add to resize handler
